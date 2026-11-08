@@ -4,9 +4,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ------------------------------------------------------------------
+ * Kanvas UI — design foundation
+ * All components read these tokens. Change a token, the whole
+ * system follows.
+ * ------------------------------------------------------------------ */
+
+/* Motion. Overrides Tailwind's default `ease-out` / `ease-in-out`
+ * with stronger curves, so every existing utility gets the upgrade. */
+@theme {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
 @theme inline {
     --font-heading: var(--font-sans);
-    --font-sans: var(--font-sans);
+    --font-mono: var(--font-geist-mono);
+    --font-sans: var(--font-inter);
+    --color-brand: var(--brand);
+    --color-brand-foreground: var(--brand-foreground);
+    --color-panel: var(--panel);
+    --color-bubble: var(--bubble);
+    --color-bubble-strong: var(--bubble-strong);
+    --color-overlay-border: var(--overlay-border);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -38,95 +59,183 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
+    --radius-sm: calc(var(--radius) * 0.5);
+    --radius-md: calc(var(--radius) * 0.75);
     --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
+    --radius-xl: calc(var(--radius) * 1.5);
+    --radius-2xl: calc(var(--radius) * 2);
+    --radius-3xl: calc(var(--radius) * 2.5);
+    --radius-4xl: calc(var(--radius) * 3);
 }
 
+/*
+ * Light. Pure neutrals (#0a0a0a family), slate fills for tracks,
+ * one blue for primary actions. Values taken from the reference design.
+ * Radius scale: md 6 · lg 8 · xl 12 · 2xl 16.
+ */
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --radius: 0.5rem;
+
+    --background: #ffffff;
+    --foreground: #0a0a0a;
+    --card: #ffffff;
+    --card-foreground: #0a0a0a;
+    --popover: #ffffff;
+    --popover-foreground: #0a0a0a;
+    --primary: #056dff;
+    --primary-foreground: #ffffff;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #0f172b;
+    --muted: #f1f5f9;
+    --muted-foreground: #45556c;
+    --accent: #0a0a0a0a;
+    --accent-foreground: #0a0a0a;
+    --destructive: #e7000b;
+    --border: #0a0a0a14;
+    --input: #0a0a0a1f;
+    --ring: #056dff;
+
+    --brand: var(--primary);
+    --brand-foreground: var(--primary-foreground);
+
+    --chart-1: #056dff;
+    --chart-2: #3c86ff;
+    --chart-3: #8ec5ff;
+    --chart-4: #1447e6;
+    --chart-5: #bedbff;
+
+    --sidebar: #fafafa;
+    --sidebar-foreground: #0a0a0a;
+    --sidebar-primary: #056dff;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #0a0a0a0a;
+    --sidebar-accent-foreground: #0a0a0a;
+    --sidebar-border: #0a0a0a14;
+    --sidebar-ring: #056dff;
+
+    /* Depth */
+    --primary-highlight: #3c86ff;
+    --surface-edge: #00000040;
+    --overlay-border: #0a0a0a0f;
+    --panel: #f9f8f6;
+    --bubble: #0a0a0a0a;
+    --bubble-strong: #0a0a0a14;
+    --raised: #ffffff;
+    --sunken: #f1f5f9;
+    --dot: #0a0a0a1f;
+    --shadow-color: #0000000d;
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    --background: #0a0a0a;
+    --foreground: #fafafa;
+    --card: #121212;
+    --card-foreground: #fafafa;
+    --popover: #161616;
+    --popover-foreground: #fafafa;
+    --primary: #2b7bff;
+    --primary-foreground: #ffffff;
+    --secondary: #1d1d1f;
+    --secondary-foreground: #fafafa;
+    --muted: #1d1d1f;
+    --muted-foreground: #a1a1a6;
+    --accent: #ffffff0f;
+    --accent-foreground: #fafafa;
+    --destructive: #ff6467;
+    --border: #ffffff17;
+    --input: #ffffff24;
+    --ring: #3c86ff;
+
+    --chart-1: #3c86ff;
+    --chart-2: #6aa6ff;
+    --chart-3: #8ec5ff;
+    --chart-4: #1f63e8;
+    --chart-5: #bedbff;
+
+    --sidebar: #0f0f0f;
+    --sidebar-foreground: #fafafa;
+    --sidebar-primary: #3c86ff;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #ffffff0f;
+    --sidebar-accent-foreground: #fafafa;
+    --sidebar-border: #ffffff17;
+    --sidebar-ring: #3c86ff;
+
+    --primary-highlight: #5c9bff;
+    --surface-edge: #00000080;
+    --overlay-border: #ffffff14;
+    --panel: #1a1918;
+    --bubble: #ffffff0f;
+    --bubble-strong: #ffffff1f;
+    --raised: #1d1d1f;
+    --sunken: #1d1d1f;
+    --dot: #ffffff1a;
+    --shadow-color: #00000066;
+}
+
+/*
+ * Surface utilities — the signature look.
+ * surface-primary : blue gradient, 1px inner edge, soft drop shadow.
+ * surface-raised  : white control with a hairline ring (outline button).
+ * surface-sunken  : slate track (tab list, segmented control).
+ * bg-dots         : dotted canvas for previews.
+ */
+@utility surface-primary {
+    background-image: linear-gradient(180deg, var(--primary-highlight) 0%, var(--primary) 100%);
+    box-shadow:
+        inset 0 0 1px var(--surface-edge),
+        inset 0 1px 0 0 #ffffff1f,
+        0 1px 2px 0 var(--shadow-color);
+}
+
+@utility surface-raised {
+    background-color: var(--raised);
+    box-shadow:
+        0 0 0 1px var(--border),
+        0 1px 2px 0 var(--shadow-color);
+}
+
+@utility surface-sunken {
+    background-color: var(--sunken);
+}
+
+@utility bg-dots {
+    background-color: var(--background);
+    background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+    background-size: 20px 20px;
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+    html {
+        @apply font-sans;
+        scroll-padding-top: 5rem;
     }
-  button:not(:disabled), [role="button"]:not(:disabled) {
-    cursor: pointer;
+    body {
+        @apply bg-background text-foreground;
+        letter-spacing: -0.006em;
     }
-  html {
-    @apply font-sans;
+    ::selection {
+        background-color: color-mix(in oklch, var(--brand) 22%, transparent);
+    }
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
+    /* Every overlay (dropdown, popover, dialog, sheet, tooltip...) enters
+     * with the strong ease-out unless a component sets its own easing. */
+    [data-slot$="-content"] {
+        --tw-ease: var(--ease-out);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
     }
 }

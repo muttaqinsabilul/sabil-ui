@@ -1,19 +1,86 @@
-import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { ArrowRightIcon } from "lucide-react"
 
-export default function Page() {
+import { components, siteConfig } from "@/lib/registry"
+import { Button } from "@/components/ui/button"
+import { Code } from "@/components/docs/code"
+import { examples } from "@/components/examples"
+
+// Live components shown on the home page, in three columns.
+const showcase = [
+  ["card-demo", "field-demo"],
+  ["tabs-segmented", "button-callout", "calendar-demo", "item-demo"],
+  ["input-otp-demo", "attachment-demo", "toggle-group-demo", "empty-demo"],
+]
+
+export default function HomePage() {
+  const newCount = components.filter((c) => c.isNew).length
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <div className="relative">
+      {/* Soft dotted backdrop that fades out under the hero. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-dots [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
+
+      <section className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 pt-20 pb-14 text-center sm:pt-28">
+        <Link
+          href="/docs/components"
+          className="group inline-flex items-center gap-2 rounded-full border bg-background/80 py-1 pr-3 pl-1 text-sm backdrop-blur transition-colors duration-150 hover:bg-muted"
+        >
+          <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-medium text-brand-foreground">New</span>
+          {newCount} components for chat and agents
+          <ArrowRightIcon className="size-3.5 text-muted-foreground transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+        </Link>
+        <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
+          The foundation for interfaces that feel right
+        </h1>
+        <p className="max-w-xl text-base text-pretty text-muted-foreground sm:text-lg">{siteConfig.description}</p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Button size="lg" asChild>
+            <Link href="/docs">Get started</Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/docs/components">Browse {components.length} components</Link>
+          </Button>
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
+        <Code
+          code="npx create-next-app@latest my-app --tailwind"
+          lang="bash"
+          className="mt-2 w-full max-w-sm text-left"
+        />
+      </section>
+
+      <section className="mx-auto max-w-screen-xl px-4 pb-24 md:px-6">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {showcase.map((col, i) => (
+            <div key={i} className={i === 2 ? "flex min-w-0 flex-col gap-4 md:col-span-2 xl:col-span-1" : "flex min-w-0 flex-col gap-4"}>
+              {col.map((name) => {
+                const Example = examples[name]
+                return Example ? (
+                  <div
+                    key={name}
+                    className="flex min-w-0 justify-center overflow-hidden rounded-2xl border bg-card p-4 sm:p-6 *:w-full"
+                  >
+                    <Example />
+                  </div>
+                ) : null
+              })}
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
+
+      <footer className="border-t">
+        <div className="mx-auto flex max-w-screen-2xl flex-col gap-2 px-4 py-8 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between md:px-6">
+          <p>{siteConfig.name}. Built on Radix and Tailwind CSS. Open code, MIT.</p>
+          <p>
+            Component examples adapted from{" "}
+            <a href="https://ui.shadcn.com" className="underline underline-offset-4 hover:text-foreground">
+              shadcn/ui
+            </a>
+            .
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
