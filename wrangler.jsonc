@@ -2,11 +2,16 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kanvas-ui",
   "compatibility_date": "2026-10-06",
-  // Static site from `next build` (output: "export").
+  "compatibility_flags": ["nodejs_compat"],
+  // Only /mcp runs this script. Everything else is served as a static file
+  // from `next build` (output: "export"), which is free and unlimited.
+  "main": "./worker/index.ts",
   "assets": {
     "directory": "./out",
+    "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "html_handling": "auto-trailing-slash"
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/mcp"]
   },
   "routes": [{ "pattern": "ui.muttaqinsabilul.my.id", "custom_domain": true }]
 }
