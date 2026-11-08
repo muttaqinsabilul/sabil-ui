@@ -80,7 +80,7 @@ export const aiRules: RuleSection[] = [
   {
     id: "components",
     title: "Pick the right component",
-    intro: "Prefer an existing component over custom markup. All 66 are listed at /docs/components.",
+    intro: "Prefer an existing component over custom markup. All 71 are listed at /docs/components.",
     table: {
       head: ["Need", "Use"],
       rows: [
@@ -96,6 +96,7 @@ export const aiRules: RuleSection[] = [
         ["Content block", "Card, Item, Empty"],
         ["Data", "Table, DataTable, Chart"],
         ["Chat UI", "Message, Bubble, MessageScroller, Attachment"],
+        ["AI chat", "PromptInput, Reasoning, ToolCall, Sources + Citation, Suggestions"],
       ],
     },
   },

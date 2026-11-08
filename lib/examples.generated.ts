@@ -408,6 +408,9 @@ export const examplesBySlug: Record<string, string[]> = {
     "progress-controlled",
     "progress-label"
   ],
+  "prompt-input": [
+    "prompt-input-demo"
+  ],
   "questionnaire": [
     "questionnaire-demo",
     "questionnaire-animated",
@@ -431,6 +434,10 @@ export const examplesBySlug: Record<string, string[]> = {
     "radio-group-disabled",
     "radio-group-fieldset",
     "radio-group-invalid"
+  ],
+  "reasoning": [
+    "reasoning-demo",
+    "reasoning-streaming"
   ],
   "resizable": [
     "resizable-demo",
@@ -497,6 +504,9 @@ export const examplesBySlug: Record<string, string[]> = {
     "sonner-position",
     "sonner-types"
   ],
+  "sources": [
+    "sources-demo"
+  ],
   "spinner": [
     "spinner-demo",
     "spinner-badge",
@@ -505,6 +515,9 @@ export const examplesBySlug: Record<string, string[]> = {
     "spinner-empty",
     "spinner-input-group",
     "spinner-size"
+  ],
+  "suggestions": [
+    "suggestions-demo"
   ],
   "switch": [
     "switch-demo",
@@ -549,6 +562,10 @@ export const examplesBySlug: Record<string, string[]> = {
     "toggle-group-sizes",
     "toggle-group-spacing",
     "toggle-group-vertical"
+  ],
+  "tool-call": [
+    "tool-call-demo",
+    "tool-call-status"
   ],
   "tooltip": [
     "tooltip-demo",
