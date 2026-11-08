@@ -25,6 +25,20 @@ export type DocComponent = {
   isNew?: boolean
 }
 
+/** Components shown in the sidebar's AI group instead of the main list. */
+export const aiComponentSlugs = [
+  "prompt-input",
+  "reasoning",
+  "tool-call",
+  "sources",
+  "suggestions",
+  "message",
+  "bubble",
+  "message-scroller",
+  "attachment",
+  "trace",
+]
+
 export const gettingStarted = [
   { href: "/docs", title: "Introduction" },
   { href: "/docs/installation", title: "Installation" },

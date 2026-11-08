@@ -3,8 +3,11 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { components, gettingStarted } from "@/lib/registry"
+import { aiComponentSlugs, components, gettingStarted } from "@/lib/registry"
 import { cn } from "@/lib/utils"
+
+const aiComponents = aiComponentSlugs.flatMap((slug) => components.filter((c) => c.slug === slug))
+const otherComponents = components.filter((c) => !aiComponentSlugs.includes(c.slug))
 
 export function DocsNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname()
@@ -18,11 +21,24 @@ export function DocsNav({ onNavigate }: { onNavigate?: () => void }) {
           </NavLink>
         ))}
       </NavGroup>
+      <NavGroup title="AI">
+        {aiComponents.map((c) => {
+          const href = `/docs/components/${c.slug}`
+          return (
+            <NavLink key={c.slug} href={href} active={pathname === href} onNavigate={onNavigate}>
+              {c.title}
+              {c.isNew && (
+                <span className="ml-auto size-1.5 rounded-full bg-brand" aria-label="New" />
+              )}
+            </NavLink>
+          )
+        })}
+      </NavGroup>
       <NavGroup title="Components">
         <NavLink href="/docs/components" active={pathname === "/docs/components"} onNavigate={onNavigate}>
           Overview
         </NavLink>
-        {components.map((c) => {
+        {otherComponents.map((c) => {
           const href = `/docs/components/${c.slug}`
           return (
             <NavLink key={c.slug} href={href} active={pathname === href} onNavigate={onNavigate}>
