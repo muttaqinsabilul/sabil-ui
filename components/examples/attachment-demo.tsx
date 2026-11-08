@@ -1,12 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { FileTextIcon, PaperclipIcon, XIcon } from "lucide-react"
+import { FileTextIcon, GlobeIcon, PaperclipIcon } from "lucide-react"
 
 import {
   Attachment,
-  AttachmentAction,
-  AttachmentActions,
   AttachmentContent,
   AttachmentDescription,
   AttachmentGroup,
@@ -21,73 +19,53 @@ import {
   PromptInputToolbar,
   PromptInputTools,
 } from "@/components/ui/prompt-input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-type Item = { id: string; name: string; meta: string; src?: string; local?: boolean }
-
-const initial: Item[] = [
+const files = [
   {
-    id: "1",
     name: "workspace.png",
     meta: "PNG · 820 KB",
     src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=300&auto=format&fit=crop&q=80",
   },
-  { id: "2", name: "brief.pdf", meta: "PDF · 1.4 MB" },
+  { name: "brief.pdf", meta: "PDF · 1.4 MB" },
 ]
 
-function formatSize(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`
-  return `${(bytes / 1024 / 1024).toFixed(1)} MB`
-}
-
-/** Files attached to a chat message before it is sent. */
+/** Files attached to a chat message, shown above the prompt. */
 export default function AttachmentDemo() {
-  const [items, setItems] = React.useState(initial)
   const [value, setValue] = React.useState("Can you turn this brief into a landing page?")
-  const fileInput = React.useRef<HTMLInputElement>(null)
+  const [streaming, setStreaming] = React.useState(false)
+  const timer = React.useRef<ReturnType<typeof setTimeout>>(undefined)
 
-  function addFiles(list: FileList | null) {
-    if (!list) return
-    const added = Array.from(list).map((file) => ({
-      id: crypto.randomUUID(),
-      name: file.name,
-      meta: `${file.name.split(".").pop()?.toUpperCase() ?? "FILE"} · ${formatSize(file.size)}`,
-      src: file.type.startsWith("image/") ? URL.createObjectURL(file) : undefined,
-      local: true,
-    }))
-    setItems((prev) => [...prev, ...added])
+  React.useEffect(() => () => clearTimeout(timer.current), [])
+
+  function submit(event: React.FormEvent) {
+    event.preventDefault()
+    if (!value.trim()) return
+    setValue("")
+    setStreaming(true)
+    timer.current = setTimeout(() => setStreaming(false), 2500)
   }
 
-  function remove(id: string) {
-    setItems((prev) => {
-      const item = prev.find((i) => i.id === id)
-      if (item?.local && item.src) URL.revokeObjectURL(item.src)
-      return prev.filter((i) => i.id !== id)
-    })
+  function stop() {
+    clearTimeout(timer.current)
+    setStreaming(false)
   }
 
   return (
-    <PromptInput onSubmit={(e) => e.preventDefault()} className="max-w-xl">
-      {items.length > 0 && (
-        <AttachmentGroup className="px-1">
-          {items.map((item) => (
-            <Attachment key={item.id} size="sm" className="w-52">
-              <AttachmentMedia variant={item.src ? "image" : "icon"}>
-                {item.src ? <img src={item.src} alt={item.name} /> : <FileTextIcon />}
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>{item.name}</AttachmentTitle>
-                <AttachmentDescription>{item.meta}</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label={`Remove ${item.name}`} onClick={() => remove(item.id)}>
-                  <XIcon />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
-          ))}
-        </AttachmentGroup>
-      )}
+    <PromptInput onSubmit={submit} className="max-w-xl">
+      <AttachmentGroup className="px-1">
+        {files.map((file) => (
+          <Attachment key={file.name} size="sm" className="w-52">
+            <AttachmentMedia variant={file.src ? "image" : "icon"}>
+              {file.src ? <img src={file.src} alt={file.name} /> : <FileTextIcon />}
+            </AttachmentMedia>
+            <AttachmentContent>
+              <AttachmentTitle>{file.name}</AttachmentTitle>
+              <AttachmentDescription>{file.meta}</AttachmentDescription>
+            </AttachmentContent>
+          </Attachment>
+        ))}
+      </AttachmentGroup>
       <PromptInputTextarea
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -96,27 +74,25 @@ export default function AttachmentDemo() {
       />
       <PromptInputToolbar>
         <PromptInputTools>
-          <input
-            ref={fileInput}
-            type="file"
-            multiple
-            hidden
-            onChange={(e) => {
-              addFiles(e.target.files)
-              e.target.value = ""
-            }}
-          />
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Attach files"
-            onClick={() => fileInput.current?.click()}
-          >
+          <Button type="button" variant="ghost" size="icon-sm" aria-label="Attach file">
             <PaperclipIcon />
           </Button>
+          <Button type="button" variant="ghost" size="sm">
+            <GlobeIcon />
+            Search
+          </Button>
+          <Select defaultValue="fast">
+            <SelectTrigger size="sm" className="border-none bg-transparent shadow-none hover:bg-accent dark:bg-transparent">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="fast">Fast</SelectItem>
+              <SelectItem value="balanced">Balanced</SelectItem>
+              <SelectItem value="deep">Deep</SelectItem>
+            </SelectContent>
+          </Select>
         </PromptInputTools>
-        <PromptInputSubmit disabled={!value.trim() && items.length === 0} />
+        <PromptInputSubmit streaming={streaming} onStop={stop} disabled={!streaming && !value.trim()} />
       </PromptInputToolbar>
     </PromptInput>
   )
