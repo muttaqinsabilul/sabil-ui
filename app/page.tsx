@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 
-import { mcpUrl } from "@/lib/mcp"
 import { components, siteConfig } from "@/lib/registry"
 import { Button } from "@/components/ui/button"
 import { Code } from "@/components/docs/code"
@@ -46,17 +45,17 @@ export default function HomePage() {
           </Button>
         </div>
         <div className="mt-2 flex w-full flex-col items-center gap-2.5">
-          <p className="text-xs text-muted-foreground">Give your AI editor the whole design system</p>
+          <p className="text-xs text-muted-foreground">Paste this prompt into your AI editor</p>
           <Code
-            code={`claude mcp add --transport http sabil-ui ${mcpUrl}`}
-            lang="bash"
-            className="w-fit max-w-full text-left [&_pre]:overflow-x-auto [&_pre]:[scrollbar-width:none]"
+            code={`Build the UI with ${siteConfig.name}. Read ${siteConfig.url}/docs/ai.md first and follow its rules.`}
+            lang="text"
+            className="w-full max-w-2xl text-left [&_code>span]:whitespace-pre-wrap"
           />
           <Link
-            href="/docs/mcp"
+            href="/docs/ai"
             className="group inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors duration-150 hover:text-foreground"
           >
-            Cursor, VS Code and Claude Desktop
+            Read the rules for AI
             <ArrowRightIcon className="size-3 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
           </Link>
         </div>

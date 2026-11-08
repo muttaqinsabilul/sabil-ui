@@ -27,9 +27,6 @@ export function DocsNav({ onNavigate }: { onNavigate?: () => void }) {
           return (
             <NavLink key={c.slug} href={href} active={pathname === href} onNavigate={onNavigate}>
               {c.title}
-              {c.isNew && (
-                <span className="ml-auto size-1.5 rounded-full bg-brand" aria-label="New" />
-              )}
             </NavLink>
           )
         })}

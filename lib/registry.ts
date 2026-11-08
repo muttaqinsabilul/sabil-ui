@@ -46,7 +46,6 @@ export const gettingStarted = [
   { href: "/docs/dark-mode", title: "Dark Mode" },
   { href: "/docs/html-css", title: "HTML, CSS & JS" },
   { href: "/docs/ai", title: "AI & LLMs" },
-  { href: "/docs/mcp", title: "MCP Server" },
 ]
 
 const exampleInfo: Record<string, { title?: string; description?: string }> = {

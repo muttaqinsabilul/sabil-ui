@@ -14,7 +14,6 @@ import path from "node:path"
 
 import { aiRulesMarkdown } from "@/lib/ai-rules"
 import { htmlComponents } from "@/lib/html-components"
-import { mcpMarkdown, mcpUrl } from "@/lib/mcp"
 import { motionFoundations, motionGroups, motionPatterns } from "@/lib/motion"
 import { components, gettingStarted, siteConfig } from "@/lib/registry"
 
@@ -315,8 +314,6 @@ function buildPages() {
 
   page("/docs/ai", "AI & LLMs", "Rules for AI assistants building UI with Sabil UI.", aiRulesMarkdown(URL_).split("\n").slice(4).join("\n"))
 
-  page("/docs/mcp", "MCP Server", "Remote MCP server for Claude Code, Cursor and VS Code.", mcpMarkdown())
-
   // HTML edition
   const htmlStatic = htmlComponents.filter((c) => !c.interactive)
   const htmlInteractive = htmlComponents.filter((c) => c.interactive)
@@ -550,8 +547,6 @@ function main() {
       `> ${siteConfig.description}`,
       "",
       `Read ${URL_}/docs/ai.md first: it holds the rules an assistant must follow to build UI with ${NAME}.`,
-      "",
-      `MCP server (Streamable HTTP, no auth): ${mcpUrl} — setup at ${URL_}/docs/mcp.md`,
       "",
       ...section("Getting started", pages.filter((p) => startHrefs.has(p.href))),
       ...section("Components", byPrefix("/docs/components/")),

@@ -62,7 +62,6 @@ export default function AiPage() {
                 ["<any page>.md", "Every page has a Markdown twin, e.g. /docs/components/button.md."],
                 ["/tokens.json", "Design tokens in the W3C Design Tokens format."],
                 ["/r/index.json", "Component registry: source, dependencies and files of every component."],
-                ["/docs/mcp", "MCP server (endpoint /mcp) for Claude Code, Cursor and VS Code."],
               ].map(([path, text]) => (
                 <tr key={path}>
                   <td className="w-48 bg-muted/50 px-4 py-2.5 align-top">
