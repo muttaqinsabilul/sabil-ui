@@ -4,6 +4,10 @@ export type HtmlComponent = {
   title: string
   description: string
   html: string
+  /** Needs kanvas.js. */
+  interactive?: boolean
+  /** Minimum preview height, for overlays that open inside the frame. */
+  minHeight?: number
 }
 
 const icon = (path: string) =>
@@ -15,6 +19,10 @@ const icons = {
   info: icon('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>'),
   alert: icon('<circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>'),
   folder: icon('<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>'),
+  user: icon('<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'),
+  settings: icon('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>'),
+  logout: icon('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/>'),
+  chevron: icon('<path d="m6 9 6 6 6-6"/>'),
   copy: icon('<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>'),
 }
 
@@ -249,5 +257,183 @@ export const htmlComponents: HtmlComponent[] = [
   <p class="k-empty__description">Create your first project to start collaborating with your team.</p>
   <button class="k-btn">${icons.plus} New project</button>
 </div>`,
+  },
+  {
+    id: "tabs",
+    title: "Tabs",
+    interactive: true,
+    description: "Tabs with panels. Arrow keys, Home and End move between tabs.",
+    html: `<div data-k-tabs style="width:100%;max-width:400px">
+  <div class="k-tablist" role="tablist" aria-label="Account">
+    <button class="k-tab" role="tab" aria-selected="true" aria-controls="tab-account">Account</button>
+    <button class="k-tab" role="tab" aria-controls="tab-password">Password</button>
+    <button class="k-tab" role="tab" aria-controls="tab-billing">Billing</button>
+  </div>
+  <div class="k-tabpanel" role="tabpanel" id="tab-account" tabindex="0">
+    <div class="k-field"><label class="k-label" for="t-name">Name</label><input class="k-input" id="t-name" value="Maya Lestari"></div>
+  </div>
+  <div class="k-tabpanel" role="tabpanel" id="tab-password" tabindex="0" hidden>
+    <div class="k-field"><label class="k-label" for="t-pass">New password</label><input class="k-input" id="t-pass" type="password"></div>
+  </div>
+  <div class="k-tabpanel" role="tabpanel" id="tab-billing" tabindex="0" hidden>
+    <p style="margin:0;color:var(--k-muted-fg)">You are on the Pro plan, billed monthly.</p>
+  </div>
+</div>`,
+  },
+  {
+    id: "dialog",
+    title: "Dialog",
+    interactive: true,
+    minHeight: 380,
+    description: "Built on native <dialog>: focus is trapped, Escape and the backdrop close it, and focus returns to the trigger.",
+    html: `<button class="k-btn k-btn--outline" data-k-open="edit-profile">Edit profile</button>
+
+<dialog class="k-dialog" id="edit-profile" aria-labelledby="edit-title">
+  <form class="k-dialog__panel" id="edit-form">
+    <div class="k-dialog__header">
+      <h2 class="k-dialog__title" id="edit-title">Edit profile</h2>
+      <p class="k-dialog__description">Changes are visible to your team.</p>
+    </div>
+    <div class="k-field"><label class="k-label" for="d-name">Name</label><input class="k-input" id="d-name" value="Maya Lestari"></div>
+    <div class="k-field"><label class="k-label" for="d-user">Username</label><input class="k-input" id="d-user" value="@maya"></div>
+    <div class="k-dialog__footer">
+      <button type="button" class="k-btn k-btn--outline" data-k-close>Cancel</button>
+      <button type="submit" class="k-btn">Save changes</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+  document.getElementById("edit-form").addEventListener("submit", (e) => {
+    e.preventDefault()
+    Kanvas.closeDialog("edit-profile")
+    Kanvas.toast({ title: "Profile saved" })
+  })
+</script>`,
+  },
+  {
+    id: "alert-dialog",
+    title: "Alert Dialog",
+    interactive: true,
+    minHeight: 320,
+    description: "The same dialog, used to confirm a destructive action.",
+    html: `<button class="k-btn k-btn--destructive" data-k-open="confirm-delete">Delete project</button>
+
+<dialog class="k-dialog" id="confirm-delete" role="alertdialog" aria-labelledby="del-title" aria-describedby="del-desc">
+  <div class="k-dialog__panel">
+    <div class="k-dialog__header">
+      <h2 class="k-dialog__title" id="del-title">Delete this project?</h2>
+      <p class="k-dialog__description" id="del-desc">This removes the project and all of its data. This cannot be undone.</p>
+    </div>
+    <div class="k-dialog__footer">
+      <button class="k-btn k-btn--outline" data-k-close>Cancel</button>
+      <button class="k-btn k-btn--destructive" data-k-close data-k-toast="Project deleted" data-k-toast-variant="destructive">Delete</button>
+    </div>
+  </div>
+</dialog>`,
+  },
+  {
+    id: "sheet",
+    title: "Sheet",
+    interactive: true,
+    minHeight: 420,
+    description: "A dialog that slides in from the edge with the drawer curve. Add k-sheet--left for the other side.",
+    html: `<button class="k-btn k-btn--outline" data-k-open="filters">Open filters</button>
+
+<dialog class="k-sheet" id="filters" aria-labelledby="filters-title">
+  <div class="k-sheet__panel">
+    <div class="k-dialog__header">
+      <h2 class="k-dialog__title" id="filters-title">Filters</h2>
+      <p class="k-dialog__description">Narrow down the results.</p>
+    </div>
+    <label class="k-choice"><input class="k-checkbox" type="checkbox" checked> In stock</label>
+    <label class="k-choice"><input class="k-checkbox" type="checkbox"> On sale</label>
+    <label class="k-choice"><input class="k-checkbox" type="checkbox"> Free shipping</label>
+    <div style="margin-top:auto;display:flex;gap:8px">
+      <button class="k-btn k-btn--outline" style="flex:1" data-k-close>Reset</button>
+      <button class="k-btn" style="flex:1" data-k-close>Apply</button>
+    </div>
+  </div>
+</dialog>`,
+  },
+  {
+    id: "dropdown-menu",
+    title: "Dropdown Menu",
+    interactive: true,
+    minHeight: 340,
+    description: "Opens under its trigger and grows from it. Arrow keys move, Escape closes, focus returns to the button.",
+    html: `<button class="k-btn k-btn--outline" data-k-menu="account-menu" aria-haspopup="menu" aria-expanded="false">
+  ${icons.user} My account ${icons.chevron}
+</button>
+
+<div class="k-menu" id="account-menu" role="menu" hidden>
+  <div class="k-menu__label">maya@acme.com</div>
+  <button class="k-menu__item" role="menuitem">${icons.user} Profile <span class="k-menu__shortcut">Ctrl P</span></button>
+  <button class="k-menu__item" role="menuitem">${icons.settings} Settings <span class="k-menu__shortcut">Ctrl ,</span></button>
+  <div class="k-menu__separator" role="separator"></div>
+  <button class="k-menu__item k-menu__item--destructive" role="menuitem">${icons.logout} Log out</button>
+</div>`,
+  },
+  {
+    id: "popover",
+    title: "Popover",
+    interactive: true,
+    minHeight: 360,
+    description: "Rich content in a floating panel. Click outside or press Escape to close.",
+    html: `<button class="k-btn k-btn--outline" data-k-popover="dimensions" aria-expanded="false">Dimensions</button>
+
+<div class="k-popover" id="dimensions" role="dialog" aria-label="Dimensions" hidden>
+  <div style="display:grid;gap:12px">
+    <div>
+      <p style="margin:0;font-weight:500">Dimensions</p>
+      <p style="margin:0;color:var(--k-muted-fg)">Set the size of the layer.</p>
+    </div>
+    <div class="k-field"><label class="k-label" for="p-w">Width</label><input class="k-input" id="p-w" value="100%"></div>
+    <div class="k-field"><label class="k-label" for="p-h">Height</label><input class="k-input" id="p-h" value="25px"></div>
+  </div>
+</div>`,
+  },
+  {
+    id: "combobox",
+    title: "Combobox",
+    interactive: true,
+    minHeight: 360,
+    description: "Type to filter, arrows to move, Enter to pick. Listen for the k-change event to read the value.",
+    html: `<div class="k-field" style="width:100%;max-width:300px">
+  <label class="k-label" for="framework">Framework</label>
+  <div class="k-combobox" data-k-combobox>
+    <input class="k-input" id="framework" role="combobox" placeholder="Search framework..." autocomplete="off">
+    <ul class="k-listbox" role="listbox" hidden>
+      <li role="option" data-value="next">Next.js</li>
+      <li role="option" data-value="nuxt">Nuxt</li>
+      <li role="option" data-value="sveltekit">SvelteKit</li>
+      <li role="option" data-value="astro">Astro</li>
+      <li role="option" data-value="remix">Remix</li>
+      <li role="option" data-value="laravel">Laravel</li>
+      <li class="k-listbox__empty" hidden>No framework found.</li>
+    </ul>
+  </div>
+</div>`,
+  },
+  {
+    id: "toast",
+    title: "Toast",
+    interactive: true,
+    minHeight: 320,
+    description: "Call Kanvas.toast() from any script, or put data-k-toast on a button. Hover pauses the timer.",
+    html: `<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+  <button class="k-btn k-btn--outline" data-k-toast="Changes saved" data-k-toast-description="Your profile is up to date.">Show toast</button>
+  <button class="k-btn k-btn--outline" id="toast-action">With action</button>
+  <button class="k-btn k-btn--destructive" data-k-toast="Upload failed" data-k-toast-description="The file is larger than 10 MB." data-k-toast-variant="destructive">Error</button>
+</div>
+
+<script>
+  document.getElementById("toast-action").addEventListener("click", () => {
+    Kanvas.toast({
+      title: "Message archived",
+      action: { label: "Undo", onClick: () => Kanvas.toast({ title: "Message restored" }) },
+    })
+  })
+</script>`,
   },
 ]

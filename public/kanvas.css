@@ -1,6 +1,8 @@
 /*!
- * Kanvas UI — plain CSS edition
+ * Kanvas UI — HTML, CSS & JS edition
  * No Tailwind, no build step. Link this file and use the k-* classes.
+ * Interactive components (tabs, dialog, sheet, menu, popover, combobox,
+ * toast) also need kanvas.js.
  *
  *   <link rel="stylesheet" href="kanvas.css">
  *   <body class="k-body"> ... </body>
@@ -842,6 +844,388 @@
   opacity: 1;
   transform: translate(-50%, 0) scale(1);
   transition-delay: 300ms;
+}
+
+/* ==================================================================
+ * Interactive components — need kanvas.js
+ * Open/close state is data-state="open" | "closed", set by the script.
+ * ================================================================== */
+
+/* ------------------------------------------------------------------
+ * Tabs with panels
+ * ------------------------------------------------------------------ */
+.k-tablist {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--k-radius-lg);
+  background: var(--k-sunken);
+}
+.k-tab {
+  flex: 1;
+  height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--k-radius-md);
+  background: transparent;
+  color: var(--k-muted-fg);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.k-tab:hover {
+  color: var(--k-fg);
+}
+.k-tab[aria-selected="true"] {
+  background: var(--k-bg);
+  color: var(--k-secondary-fg);
+  box-shadow: 0 1px 2px var(--k-shadow);
+}
+.dark .k-tab[aria-selected="true"],
+[data-theme="dark"] .k-tab[aria-selected="true"] {
+  background: #ffffff1a;
+  color: var(--k-fg);
+}
+.k-tab:focus-visible {
+  outline: 2px solid var(--k-ring);
+  outline-offset: 1px;
+}
+.k-tabpanel {
+  padding-top: 12px;
+  font-size: 14px;
+}
+.k-tabpanel:focus-visible {
+  outline: 2px solid var(--k-ring);
+  outline-offset: 4px;
+  border-radius: var(--k-radius-md);
+}
+
+/* ------------------------------------------------------------------
+ * Dialog & sheet (native <dialog>)
+ * ------------------------------------------------------------------ */
+.k-dialog,
+.k-sheet {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--k-fg);
+  overflow: visible;
+}
+.k-dialog {
+  width: 420px;
+  max-width: calc(100% - 32px);
+}
+.k-dialog::backdrop,
+.k-sheet::backdrop {
+  background: rgb(0 0 0 / 0.3);
+  opacity: 0;
+  transition: opacity 200ms var(--k-ease-out);
+}
+.k-dialog[data-state="open"]::backdrop,
+.k-sheet[data-state="open"]::backdrop {
+  opacity: 1;
+}
+.k-dialog__panel {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  border-radius: var(--k-radius-xl);
+  background: var(--k-popover);
+  box-shadow:
+    0 0 0 1px var(--k-border),
+    0 24px 48px -12px rgb(0 0 0 / 0.18);
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 150ms var(--k-ease-out),
+    transform 150ms var(--k-ease-out);
+}
+.k-dialog[data-state="open"] .k-dialog__panel {
+  opacity: 1;
+  transform: none;
+  transition-duration: 200ms;
+}
+.k-dialog__header {
+  display: grid;
+  gap: 6px;
+}
+.k-dialog__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.k-dialog__description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--k-muted-fg);
+}
+.k-dialog__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.k-dialog__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.k-sheet {
+  width: 380px;
+  max-width: calc(100% - 48px);
+  height: 100%;
+  max-height: 100%;
+  margin: 0 0 0 auto;
+}
+.k-sheet__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  padding: 24px;
+  background: var(--k-popover);
+  box-shadow:
+    -1px 0 0 var(--k-border),
+    -24px 0 48px -12px rgb(0 0 0 / 0.18);
+  transform: translateX(100%);
+  transition: transform 250ms var(--k-ease-drawer);
+}
+.k-sheet[data-state="open"] .k-sheet__panel {
+  transform: none;
+  transition-duration: 400ms;
+}
+.k-sheet--left {
+  margin: 0 auto 0 0;
+}
+.k-sheet--left .k-sheet__panel {
+  box-shadow:
+    1px 0 0 var(--k-border),
+    24px 0 48px -12px rgb(0 0 0 / 0.18);
+  transform: translateX(-100%);
+}
+
+/* ------------------------------------------------------------------
+ * Menu & popover (positioned by kanvas.js)
+ * ------------------------------------------------------------------ */
+.k-menu,
+.k-popover {
+  position: fixed;
+  z-index: 50;
+  margin: 0;
+  border-radius: var(--k-radius-xl);
+  background: var(--k-popover);
+  color: var(--k-fg);
+  box-shadow:
+    0 0 0 1px var(--k-border),
+    0 10px 24px -6px rgb(0 0 0 / 0.12);
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 120ms var(--k-ease-out),
+    transform 120ms var(--k-ease-out);
+}
+.k-menu[data-state="open"],
+.k-popover[data-state="open"] {
+  opacity: 1;
+  transform: none;
+  transition-duration: 180ms;
+}
+.k-menu[hidden],
+.k-popover[hidden] {
+  display: none;
+}
+.k-menu {
+  min-width: 200px;
+  padding: 4px;
+}
+.k-popover {
+  width: 288px;
+  padding: 16px;
+}
+.k-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 32px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--k-radius-lg);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+}
+.k-menu__item svg {
+  width: 16px;
+  height: 16px;
+  color: var(--k-muted-fg);
+}
+.k-menu__item:hover,
+.k-menu__item:focus-visible,
+.k-menu__item:focus {
+  background: var(--k-accent);
+}
+.k-menu__item--destructive,
+.k-menu__item--destructive svg {
+  color: var(--k-destructive);
+}
+.k-menu__label {
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--k-muted-fg);
+}
+.k-menu__separator {
+  height: 1px;
+  margin: 4px -4px;
+  background: var(--k-border);
+}
+.k-menu__shortcut {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--k-muted-fg);
+}
+
+/* ------------------------------------------------------------------
+ * Combobox
+ * ------------------------------------------------------------------ */
+.k-combobox {
+  position: relative;
+  width: 100%;
+}
+.k-listbox {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  max-height: 240px;
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+  list-style: none;
+  border-radius: var(--k-radius-xl);
+  background: var(--k-popover);
+  box-shadow:
+    0 0 0 1px var(--k-border),
+    0 10px 24px -6px rgb(0 0 0 / 0.12);
+  transform-origin: top center;
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 120ms var(--k-ease-out),
+    transform 120ms var(--k-ease-out);
+}
+.k-listbox[data-state="open"] {
+  opacity: 1;
+  transform: none;
+  transition-duration: 180ms;
+}
+.k-listbox[hidden] {
+  display: none;
+}
+.k-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: var(--k-radius-lg);
+  font-size: 14px;
+  cursor: pointer;
+}
+.k-option[data-active="true"] {
+  background: var(--k-accent);
+}
+.k-option[aria-selected="true"]::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: var(--k-primary);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.k-option[hidden] {
+  display: none;
+}
+.k-listbox__empty {
+  padding: 16px 8px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--k-muted-fg);
+}
+
+/* ------------------------------------------------------------------
+ * Toast
+ * ------------------------------------------------------------------ */
+.k-toaster {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  width: 356px;
+  max-width: calc(100% - 32px);
+  pointer-events: none;
+}
+.k-toast {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2px 12px;
+  padding: 14px 16px;
+  border-radius: var(--k-radius-xl);
+  background: var(--k-popover);
+  color: var(--k-fg);
+  font-size: 14px;
+  box-shadow:
+    0 0 0 1px var(--k-border),
+    0 10px 24px -6px rgb(0 0 0 / 0.12);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    opacity 400ms var(--k-ease-out),
+    transform 400ms var(--k-ease-out);
+}
+.k-toast[data-state="open"] {
+  opacity: 1;
+  transform: none;
+}
+.k-toast[data-state="closed"] {
+  opacity: 0;
+  transform: scale(0.96);
+  transition-duration: 150ms;
+}
+.k-toast__title {
+  margin: 0;
+  font-weight: 500;
+}
+.k-toast__description {
+  grid-column: 1;
+  margin: 0;
+  color: var(--k-muted-fg);
+}
+.k-toast > .k-btn {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+}
+.k-toast--destructive .k-toast__title {
+  color: var(--k-destructive);
 }
 
 /* ------------------------------------------------------------------

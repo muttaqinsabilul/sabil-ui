@@ -30,7 +30,7 @@ export const gettingStarted = [
   { href: "/docs/installation", title: "Installation" },
   { href: "/docs/theming", title: "Theming" },
   { href: "/docs/dark-mode", title: "Dark Mode" },
-  { href: "/docs/html-css", title: "HTML & CSS" },
+  { href: "/docs/html-css", title: "HTML, CSS & JS" },
 ]
 
 const exampleInfo: Record<string, { title?: string; description?: string }> = {
