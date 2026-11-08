@@ -15,7 +15,7 @@ export default function MotionOverviewPage() {
       pages={motionPages}
       eyebrow="Motion"
       title="Motion Foundation"
-      description="How things move in Kanvas UI. Short, purposeful animation that gives feedback, keeps space consistent and never gets in the way."
+      description="How things move in Sabil UI. Short, purposeful animation that gives feedback, keeps space consistent and never gets in the way."
       toc={[
         { id: "tokens", title: "Tokens" },
         { id: "tools", title: "Tools" },

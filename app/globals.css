@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------
- * Kanvas UI — design foundation
+ * Sabil UI — design foundation
  * All components read these tokens. Change a token, the whole
  * system follows.
  * ------------------------------------------------------------------ */

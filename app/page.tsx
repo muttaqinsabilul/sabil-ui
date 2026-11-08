@@ -30,7 +30,8 @@ export default function HomePage() {
           {newCount} components for chat and agents
           <ArrowRightIcon className="size-3.5 text-muted-foreground transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
         </Link>
-        <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
+        {/* Text fades from full foreground to a soft gray at the bottom (both themes). */}
+        <h1 className="bg-linear-to-b from-foreground from-30% to-foreground/55 bg-clip-text pb-1 text-4xl font-semibold tracking-tight text-balance text-transparent sm:text-6xl">
           The foundation for interfaces that feel right
         </h1>
         <p className="max-w-xl text-base text-pretty text-muted-foreground sm:text-lg">{siteConfig.description}</p>

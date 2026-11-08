@@ -6,7 +6,7 @@ import { useTheme } from "next-themes"
 const noop = () => () => {}
 
 /**
- * Renders plain HTML inside an iframe that loads only /kanvas.css and /kanvas.js.
+ * Renders plain HTML inside an iframe that loads only /sabil.css and /sabil.js.
  * Nothing from the docs site (Tailwind, React components) leaks in,
  * so the preview shows exactly what a plain HTML page would get.
  */
@@ -23,14 +23,14 @@ export function HtmlFrame({ html, title, minHeight = 160 }: { html: string; titl
 <meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
-<link rel="stylesheet" href="/kanvas.css">
-<script src="/kanvas.js"></script>
+<link rel="stylesheet" href="/sabil.css">
+<script src="/sabil.js"></script>
 <style>
-  html { background: var(--k-bg); overflow: hidden; }
+  html { background: var(--s-bg); overflow: hidden; }
   body { padding: 40px 24px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
 </style>
 </head>
-<body class="k-body">${html}</body>
+<body class="s-body">${html}</body>
 </html>`
 
   React.useEffect(() => {

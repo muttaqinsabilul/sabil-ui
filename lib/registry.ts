@@ -1,7 +1,7 @@
 import { examplesBySlug } from "@/lib/examples.generated"
 
 export const siteConfig = {
-  name: "Kanvas UI",
+  name: "Sabil UI",
   description:
     "A set of beautifully crafted, accessible components with a calm, tactile design foundation. Open code. Copy it, own it, ship it.",
   url: "https://ui.muttaqinsabilul.my.id",

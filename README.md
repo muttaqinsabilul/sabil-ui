@@ -1,4 +1,4 @@
-# Kanvas UI
+# Sabil UI
 
 A component library and documentation site with its own design foundation.
 Built with Next.js, Tailwind CSS v4 and Radix UI.

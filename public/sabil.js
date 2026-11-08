@@ -1,28 +1,28 @@
 /*!
- * Kanvas UI — kanvas.js
- * Vanilla JavaScript for the interactive components in kanvas.css.
+ * Sabil UI — sabil.js
+ * Vanilla JavaScript for the interactive components in sabil.css.
  * No dependencies. Load once, anywhere on the page:
  *
- *   <script src="kanvas.js" defer></script>
+ *   <script src="sabil.js" defer></script>
  *
  * Components wire themselves up from data attributes, including markup
  * added later (all listeners are delegated to document).
  *
- *   Tabs       <div data-k-tabs> role="tablist" / role="tab" / role="tabpanel"
- *   Dialog     <button data-k-open="id">  <dialog id="id" class="k-dialog">
- *   Sheet      <button data-k-open="id">  <dialog id="id" class="k-sheet">
- *   Close      any element with data-k-close inside a dialog or sheet
- *   Menu       <button data-k-menu="id">  <div id="id" class="k-menu" role="menu" hidden>
- *   Popover    <button data-k-popover="id">  <div id="id" class="k-popover" hidden>
- *   Combobox   <div class="k-combobox" data-k-combobox> input + role="listbox"
- *   Toast      Kanvas.toast({ title, description, variant, action })
- *              or <button data-k-toast="Title" data-k-toast-description="…">
+ *   Tabs       <div data-s-tabs> role="tablist" / role="tab" / role="tabpanel"
+ *   Dialog     <button data-s-open="id">  <dialog id="id" class="s-dialog">
+ *   Sheet      <button data-s-open="id">  <dialog id="id" class="s-sheet">
+ *   Close      any element with data-s-close inside a dialog or sheet
+ *   Menu       <button data-s-menu="id">  <div id="id" class="s-menu" role="menu" hidden>
+ *   Popover    <button data-s-popover="id">  <div id="id" class="s-popover" hidden>
+ *   Combobox   <div class="s-combobox" data-s-combobox> input + role="listbox"
+ *   Toast      Sabil.toast({ title, description, variant, action })
+ *              or <button data-s-toast="Title" data-s-toast-description="…">
  */
 ;(function () {
   "use strict"
 
   var EXIT_MS = 160
-  var Kanvas = (window.Kanvas = window.Kanvas || {})
+  var Sabil = (window.Sabil = window.Sabil || {})
 
   function $(sel, root) {
     return (root || document).querySelector(sel)
@@ -61,7 +61,7 @@
    * ---------------------------------------------------------------- */
   function selectTab(tab, focus) {
     var list = tab.closest('[role="tablist"]')
-    var root = tab.closest("[data-k-tabs]") || document
+    var root = tab.closest("[data-s-tabs]") || document
     $$('[role="tab"]', list).forEach(function (t) {
       var on = t === tab
       t.setAttribute("aria-selected", on ? "true" : "false")
@@ -70,11 +70,11 @@
       if (panel) panel.hidden = !on
     })
     if (focus) tab.focus()
-    root.dispatchEvent(new CustomEvent("k-change", { detail: { tab: tab }, bubbles: true }))
+    root.dispatchEvent(new CustomEvent("s-change", { detail: { tab: tab }, bubbles: true }))
   }
 
   function initTabs(root) {
-    $$('[data-k-tabs] [role="tablist"]', root).forEach(function (list) {
+    $$('[data-s-tabs] [role="tablist"]', root).forEach(function (list) {
       var tabs = $$('[role="tab"]', list)
       var selected = tabs.filter(function (t) {
         return t.getAttribute("aria-selected") === "true"
@@ -84,12 +84,12 @@
   }
 
   document.addEventListener("click", function (e) {
-    var tab = e.target.closest('[data-k-tabs] [role="tab"]')
+    var tab = e.target.closest('[data-s-tabs] [role="tab"]')
     if (tab) selectTab(tab, false)
   })
 
   document.addEventListener("keydown", function (e) {
-    var tab = e.target.closest && e.target.closest('[data-k-tabs] [role="tab"]')
+    var tab = e.target.closest && e.target.closest('[data-s-tabs] [role="tab"]')
     if (!tab) return
     var tabs = $$('[role="tab"]', tab.closest('[role="tablist"]'))
     var i = tabs.indexOf(tab)
@@ -121,7 +121,7 @@
 
   function closeDialog(dialog) {
     if (!dialog || !dialog.open) return
-    var isSheet = dialog.classList.contains("k-sheet")
+    var isSheet = dialog.classList.contains("s-sheet")
     dialog.setAttribute("data-state", "closed")
     setTimeout(function () {
       dialog.close()
@@ -129,27 +129,27 @@
     }, isSheet ? 250 : EXIT_MS)
   }
 
-  Kanvas.openDialog = function (id) {
+  Sabil.openDialog = function (id) {
     openDialog(document.getElementById(id))
   }
-  Kanvas.closeDialog = function (id) {
+  Sabil.closeDialog = function (id) {
     closeDialog(document.getElementById(id))
   }
 
   document.addEventListener("click", function (e) {
-    var opener = e.target.closest("[data-k-open]")
+    var opener = e.target.closest("[data-s-open]")
     if (opener) {
-      openDialog(document.getElementById(opener.getAttribute("data-k-open")), opener)
+      openDialog(document.getElementById(opener.getAttribute("data-s-open")), opener)
       return
     }
-    var closer = e.target.closest("[data-k-close]")
+    var closer = e.target.closest("[data-s-close]")
     if (closer) {
       closeDialog(closer.closest("dialog"))
       return
     }
     // A click on the <dialog> element itself is a click on the backdrop,
     // because the visible panel is a child that fills the content box.
-    if (e.target.matches && e.target.matches("dialog.k-dialog, dialog.k-sheet")) {
+    if (e.target.matches && e.target.matches("dialog.s-dialog, dialog.s-sheet")) {
       closeDialog(e.target)
     }
   })
@@ -158,7 +158,7 @@
   document.addEventListener(
     "cancel",
     function (e) {
-      if (e.target.matches && e.target.matches("dialog.k-dialog, dialog.k-sheet")) {
+      if (e.target.matches && e.target.matches("dialog.s-dialog, dialog.s-sheet")) {
         e.preventDefault()
         closeDialog(e.target)
       }
@@ -234,15 +234,15 @@
   }
 
   document.addEventListener("click", function (e) {
-    var menuTrigger = e.target.closest("[data-k-menu]")
-    if (menuTrigger) return toggle(menuTrigger, "data-k-menu", "menu")
-    var popTrigger = e.target.closest("[data-k-popover]")
-    if (popTrigger) return toggle(popTrigger, "data-k-popover", "popover")
+    var menuTrigger = e.target.closest("[data-s-menu]")
+    if (menuTrigger) return toggle(menuTrigger, "data-s-menu", "menu")
+    var popTrigger = e.target.closest("[data-s-popover]")
+    if (popTrigger) return toggle(popTrigger, "data-s-popover", "popover")
 
-    var item = e.target.closest('.k-menu [role="menuitem"]')
+    var item = e.target.closest('.s-menu [role="menuitem"]')
     if (item && openFloating) {
       openFloating.el.dispatchEvent(
-        new CustomEvent("k-select", { detail: { item: item, value: item.getAttribute("data-value") || item.textContent.trim() }, bubbles: true })
+        new CustomEvent("s-select", { detail: { item: item, value: item.getAttribute("data-value") || item.textContent.trim() }, bubbles: true })
       )
       closeFloat(true)
       return
@@ -252,10 +252,10 @@
 
   document.addEventListener("keydown", function (e) {
     // Arrow keys on a closed menu trigger open it.
-    var trigger = e.target.closest && e.target.closest("[data-k-menu]")
+    var trigger = e.target.closest && e.target.closest("[data-s-menu]")
     if (trigger && (e.key === "ArrowDown" || e.key === "ArrowUp") && !openFloating) {
       e.preventDefault()
-      return toggle(trigger, "data-k-menu", "menu")
+      return toggle(trigger, "data-s-menu", "menu")
     }
     if (!openFloating) return
     if (e.key === "Escape") {
@@ -295,7 +295,7 @@
     return {
       input: $('input[role="combobox"]', root),
       list: $('[role="listbox"]', root),
-      empty: $(".k-listbox__empty", root),
+      empty: $(".s-listbox__empty", root),
     }
   }
 
@@ -354,34 +354,34 @@
     p.input.value = option.textContent.trim()
     closeCombo(root)
     root.dispatchEvent(
-      new CustomEvent("k-change", { detail: { value: option.getAttribute("data-value") || p.input.value }, bubbles: true })
+      new CustomEvent("s-change", { detail: { value: option.getAttribute("data-value") || p.input.value }, bubbles: true })
     )
   }
 
   function initCombobox(root) {
-    $$("[data-k-combobox]", root).forEach(function (combo, n) {
+    $$("[data-s-combobox]", root).forEach(function (combo, n) {
       var p = comboParts(combo)
       if (!p.input || !p.list) return
-      if (!p.list.id) p.list.id = "k-listbox-" + n
+      if (!p.list.id) p.list.id = "s-listbox-" + n
       p.input.setAttribute("aria-controls", p.list.id)
       p.input.setAttribute("aria-expanded", "false")
       p.input.setAttribute("aria-autocomplete", "list")
       $$('[role="option"]', p.list).forEach(function (o, i) {
         if (!o.id) o.id = p.list.id + "-" + i
-        o.classList.add("k-option")
+        o.classList.add("s-option")
       })
     })
   }
 
   document.addEventListener("input", function (e) {
-    var root = e.target.closest && e.target.closest("[data-k-combobox]")
+    var root = e.target.closest && e.target.closest("[data-s-combobox]")
     if (!root) return
     openCombo(root)
     filterCombo(root)
   })
 
   document.addEventListener("focusin", function (e) {
-    var root = e.target.closest && e.target.closest("[data-k-combobox]")
+    var root = e.target.closest && e.target.closest("[data-s-combobox]")
     if (root && e.target.matches('input[role="combobox"]')) {
       openCombo(root)
       filterCombo(root)
@@ -389,19 +389,19 @@
   })
 
   document.addEventListener("mousedown", function (e) {
-    var option = e.target.closest('[data-k-combobox] [role="option"]')
+    var option = e.target.closest('[data-s-combobox] [role="option"]')
     if (option) {
       e.preventDefault() // keep focus in the input
-      chooseOption(option.closest("[data-k-combobox]"), option)
+      chooseOption(option.closest("[data-s-combobox]"), option)
       return
     }
-    $$("[data-k-combobox]").forEach(function (root) {
+    $$("[data-s-combobox]").forEach(function (root) {
       if (!root.contains(e.target)) closeCombo(root)
     })
   })
 
   document.addEventListener("keydown", function (e) {
-    var root = e.target.closest && e.target.closest("[data-k-combobox]")
+    var root = e.target.closest && e.target.closest("[data-s-combobox]")
     if (!root) return
     var p = comboParts(root)
     var options = visibleOptions(p.list)
@@ -429,10 +429,10 @@
   var MAX_TOASTS = 3
 
   function toaster() {
-    var el = $(".k-toaster")
+    var el = $(".s-toaster")
     if (!el) {
       el = document.createElement("ol")
-      el.className = "k-toaster"
+      el.className = "s-toaster"
       el.setAttribute("aria-live", "polite")
       document.body.appendChild(el)
     }
@@ -449,21 +449,21 @@
     }, EXIT_MS)
   }
 
-  Kanvas.toast = function (options) {
+  Sabil.toast = function (options) {
     var o = typeof options === "string" ? { title: options } : options || {}
     var list = toaster()
     var toast = document.createElement("li")
-    toast.className = "k-toast" + (o.variant === "destructive" ? " k-toast--destructive" : "")
+    toast.className = "s-toast" + (o.variant === "destructive" ? " s-toast--destructive" : "")
     toast.setAttribute("role", o.variant === "destructive" ? "alert" : "status")
 
     var title = document.createElement("p")
-    title.className = "k-toast__title"
+    title.className = "s-toast__title"
     title.textContent = o.title || ""
     toast.appendChild(title)
 
     if (o.description) {
       var desc = document.createElement("p")
-      desc.className = "k-toast__description"
+      desc.className = "s-toast__description"
       desc.textContent = o.description
       toast.appendChild(desc)
     }
@@ -471,7 +471,7 @@
     if (o.action) {
       var btn = document.createElement("button")
       btn.type = "button"
-      btn.className = "k-btn k-btn--outline k-btn--sm"
+      btn.className = "s-btn s-btn--outline s-btn--sm"
       btn.textContent = o.action.label
       btn.addEventListener("click", function () {
         if (o.action.onClick) o.action.onClick()
@@ -510,19 +510,19 @@
     })
     start()
 
-    var live = $$(".k-toast:not([data-state='closed'])", list)
+    var live = $$(".s-toast:not([data-state='closed'])", list)
     if (live.length > MAX_TOASTS) dismiss(live[0])
 
     return { dismiss: function () { dismiss(toast) } }
   }
 
   document.addEventListener("click", function (e) {
-    var t = e.target.closest("[data-k-toast]")
+    var t = e.target.closest("[data-s-toast]")
     if (t) {
-      Kanvas.toast({
-        title: t.getAttribute("data-k-toast"),
-        description: t.getAttribute("data-k-toast-description") || undefined,
-        variant: t.getAttribute("data-k-toast-variant") || undefined,
+      Sabil.toast({
+        title: t.getAttribute("data-s-toast"),
+        description: t.getAttribute("data-s-toast-description") || undefined,
+        variant: t.getAttribute("data-s-toast-variant") || undefined,
       })
     }
   })
@@ -530,16 +530,16 @@
   /* ----------------------------------------------------------------
    * Init
    * ---------------------------------------------------------------- */
-  Kanvas.init = function (root) {
+  Sabil.init = function (root) {
     initTabs(root)
     initCombobox(root)
   }
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function () {
-      Kanvas.init()
+      Sabil.init()
     })
   } else {
-    Kanvas.init()
+    Sabil.init()
   }
 })()
