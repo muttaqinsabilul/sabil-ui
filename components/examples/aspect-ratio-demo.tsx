@@ -7,7 +7,7 @@ export default function AspectRatioDemo() {
     <div className="w-full max-w-sm">
       <AspectRatio ratio={16 / 9} className="rounded-lg bg-muted">
         <Image
-          src="https://avatar.vercel.sh/shadcn1"
+          src="https://avatar.vercel.sh/kanvas1"
           alt="Photo"
           fill
           className="w-full rounded-lg object-cover grayscale dark:brightness-20"

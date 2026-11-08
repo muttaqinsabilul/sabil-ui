@@ -22,7 +22,7 @@ export default function EmptyAvatarGroup() {
         <EmptyMedia>
           <div className="flex -space-x-2 *:data-[slot=avatar]:size-12 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:grayscale">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage src="https://avatar.vercel.sh/maya" alt="@maya" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <Avatar>

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import type { QuestionnaireItemStatus } from "@shadcn/react/questionnaire"
+import type { QuestionnaireItemStatus } from "@/components/ui/questionnaire"
 import { toast } from "sonner"
 
 import {

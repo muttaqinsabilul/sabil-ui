@@ -20,7 +20,7 @@ export default function EmptyAvatar() {
         <EmptyMedia variant="default">
           <Avatar className="size-12">
             <AvatarImage
-              src="https://github.com/shadcn.png"
+              src="https://avatar.vercel.sh/maya"
               className="grayscale"
             />
             <AvatarFallback>LR</AvatarFallback>

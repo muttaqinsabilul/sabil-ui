@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kanvas-ui",
+  "compatibility_date": "2026-10-06",
+  // Static site from `next build` (output: "export").
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [{ "pattern": "ui.muttaqinsabilul.my.id", "custom_domain": true }]
+}

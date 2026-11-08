@@ -70,9 +70,9 @@ import {
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
+    name: "maya",
     email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "https://avatar.vercel.sh/maya",
   },
   teams: [
     {

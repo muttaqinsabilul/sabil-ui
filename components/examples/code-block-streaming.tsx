@@ -40,7 +40,7 @@ const blocks: {
   },
   {
     language: "bash",
-    code: "pnpm dlx shadcn@latest add code-block",
+    code: "pnpm dlx maya@latest add code-block",
   },
   {
     title: "components/search.tsx",

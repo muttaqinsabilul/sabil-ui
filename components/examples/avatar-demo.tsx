@@ -12,8 +12,8 @@ export default function AvatarDemo() {
     <div className="flex flex-row flex-wrap items-center gap-6 md:gap-12">
       <Avatar>
         <AvatarImage
-          src="https://github.com/shadcn.png"
-          alt="@shadcn"
+          src="https://avatar.vercel.sh/maya"
+          alt="@maya"
           className="grayscale"
         />
         <AvatarFallback>CN</AvatarFallback>
@@ -28,7 +28,7 @@ export default function AvatarDemo() {
       </Avatar>
       <AvatarGroup className="grayscale">
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://avatar.vercel.sh/maya" alt="@maya" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <Avatar>

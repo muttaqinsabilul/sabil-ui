@@ -4,7 +4,7 @@ export const siteConfig = {
   name: "Kanvas UI",
   description:
     "A set of beautifully crafted, accessible components with a calm, tactile design foundation. Open code. Copy it, own it, ship it.",
-  url: "http://localhost:3000",
+  url: "https://ui.muttaqinsabilul.my.id",
 }
 
 export type DocExample = {

@@ -322,3 +322,5 @@ export {
   QuestionnaireSubmit,
   QuestionnaireTitle,
 }
+
+export type { QuestionnaireItemStatus } from "@shadcn/react/questionnaire"

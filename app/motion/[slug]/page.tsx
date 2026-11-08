@@ -6,6 +6,8 @@ import { getMotionPattern, motionPages, motionPatterns } from "@/lib/motion"
 import { ComponentPreview } from "@/components/docs/component-preview"
 import { DocPage, H2, H3, P, Section } from "@/components/docs/doc-page"
 
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return motionPatterns.map((p) => ({ slug: p.slug }))
 }

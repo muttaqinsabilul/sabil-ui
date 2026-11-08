@@ -7,6 +7,8 @@ import { ComponentPreview } from "@/components/docs/component-preview"
 import { DocPage, H2, H3, InlineCode, P, Section } from "@/components/docs/doc-page"
 import { getDependencies, getExports, readSource } from "@/components/docs/source"
 
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return components.map((c) => ({ slug: c.slug }))
 }

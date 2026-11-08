@@ -32,7 +32,7 @@ export function DialogCloseButton() {
             </Label>
             <Input
               id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
+              defaultValue="https://ui.muttaqinsabilul.my.id/docs/installation"
               readOnly
             />
           </div>

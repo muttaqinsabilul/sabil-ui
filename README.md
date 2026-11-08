@@ -30,7 +30,7 @@ Open http://localhost:3000. The docs live at `/docs`.
 3. Add examples in `components/examples/<name>-demo.tsx` (and `<name>-*.tsx` for more).
 4. Run `npm run dev`. The example index regenerates and the page appears at `/docs/components/<name>`.
 
-## Credits
+## Licenses
 
-Components and most examples are adapted from [shadcn/ui](https://github.com/shadcn-ui/ui) (MIT).
-See `components/examples/LICENSE-shadcn.md`.
+MIT. Some parts are adapted from other open-source projects; see
+`THIRD-PARTY-LICENSES.md`.

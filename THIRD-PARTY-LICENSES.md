@@ -1,3 +1,12 @@
+# Third-party licenses
+
+Parts of this project are adapted from open-source work. Their licenses
+are reproduced below, as they require.
+
+## UI components, examples and base variants
+
+Applies to `components/ui/`, `components/examples/` and `app/variants.css`.
+
 MIT License
 
 Copyright (c) 2023 shadcn
