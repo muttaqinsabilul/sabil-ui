@@ -5,6 +5,7 @@ import { components, siteConfig } from "@/lib/registry"
 import { Button } from "@/components/ui/button"
 import { Code } from "@/components/docs/code"
 import { examples } from "@/components/examples"
+import { Reveal } from "@/components/reveal"
 
 // Live components shown on the home page, in three columns.
 const showcase = [
@@ -46,7 +47,7 @@ export default function HomePage() {
         <Code
           code="npx create-next-app@latest my-app --tailwind"
           lang="bash"
-          className="mt-2 w-full max-w-sm text-left"
+          className="mt-2 w-fit max-w-full text-left [&_pre]:overflow-x-auto [&_pre]:[scrollbar-width:none]"
         />
       </section>
 
@@ -54,15 +55,15 @@ export default function HomePage() {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {showcase.map((col, i) => (
             <div key={i} className={i === 2 ? "flex min-w-0 flex-col gap-4 md:col-span-2 xl:col-span-1" : "flex min-w-0 flex-col gap-4"}>
-              {col.map((name) => {
+              {col.map((name, j) => {
                 const Example = examples[name]
                 return Example ? (
-                  <div
-                    key={name}
-                    className="flex min-w-0 justify-center overflow-hidden rounded-2xl border bg-card p-4 sm:p-6 *:w-full"
-                  >
-                    <Example />
-                  </div>
+                  // Columns cascade left to right, cards top to bottom.
+                  <Reveal key={name} delay={i * 0.12 + Math.min(j, 1) * 0.08}>
+                    <div className="flex min-w-0 justify-center overflow-hidden rounded-2xl border bg-card p-4 sm:p-6 *:w-full">
+                      <Example />
+                    </div>
+                  </Reveal>
                 ) : null
               })}
             </div>

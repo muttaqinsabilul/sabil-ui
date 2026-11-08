@@ -54,10 +54,10 @@ export const aiRules: RuleSection[] = [
       rows: [
         ["Buttons, inputs, selects (default)", "40px high", "built into the components"],
         ["Small controls", "32px high", 'size="sm"'],
-        ["Tab trigger", "6px radius", "rounded-md"],
-        ["Controls, menu items", "8px radius", "rounded-lg"],
-        ["Menus, popovers, dialogs, cards", "12px radius", "rounded-xl"],
-        ["Large cards, chat bubbles", "16px radius", "rounded-2xl"],
+        ["Tab trigger", "7.5px radius", "rounded-md"],
+        ["Controls, menu items", "10px radius", "rounded-lg"],
+        ["Menus, popovers, dialogs, cards", "15px radius", "rounded-xl"],
+        ["Large cards, chat bubbles", "20px radius", "rounded-2xl"],
         ["Font", "Inter; Geist Mono for code", "font-sans / font-mono"],
         ["Body text", "14px", "text-sm"],
         ["Button text", "14px, 500, -0.01em tracking", "built in"],
@@ -69,7 +69,7 @@ export const aiRules: RuleSection[] = [
     id: "surfaces",
     title: "Surfaces",
     rules: [
-      "Primary actions use `<Button>` (default variant): a blue vertical gradient (#3c86ff → #056dff) with a 1px inner edge. Do not restyle it with bg-blue-*.",
+      "Primary actions use `<Button>` (default variant): a blue vertical gradient (#4a8fff → #056dff) with a soft top sheen, a darker 1px ring and a blue-tinted shadow. Do not restyle it with bg-blue-*.",
       "Secondary actions use `<Button variant=\"outline\">`: white, hairline ring, `0 1px 2px` shadow.",
       "One primary button per view or form. Everything else is outline, secondary or ghost.",
       "Segmented controls and tabs sit on a flat slate track (`bg-muted`, 2px padding); the active item is white with `shadow-xs`.",

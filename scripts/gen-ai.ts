@@ -106,7 +106,7 @@ function buildTokens() {
   return {
     $description: `${NAME} design tokens. Colors carry light and dark values under $extensions["ui.sabil.modes"].`,
     color,
-    radius: { sm: px(4), md: px(6), lg: px(8), xl: px(12), "2xl": px(16), full: px(9999) },
+    radius: { sm: px(5), md: px(7.5), lg: px(10), xl: px(15), "2xl": px(20), full: px(9999) },
     size: { control: px(40), "control-sm": px(32), "control-lg": px(44), "tab-trigger": px(32) },
     font: {
       sans: { $type: "fontFamily", $value: ["Inter", "system-ui", "sans-serif"] },
@@ -121,7 +121,7 @@ function buildTokens() {
       primary: {
         $type: "gradient",
         $value: [
-          { color: light["primary-highlight"] ?? "#3c86ff", position: 0 },
+          { color: light["primary-highlight"] ?? "#4a8fff", position: 0 },
           { color: light.primary ?? "#056dff", position: 1 },
         ],
       },
@@ -233,11 +233,11 @@ function themingBody() {
     "",
     "## Radius",
     "",
-    "`--radius: 0.5rem`. Scale: sm 4px, md 6px (tab trigger), lg 8px (controls, menu items), xl 12px (menus, popovers, dialogs), 2xl 16px (cards, bubbles).",
+    "`--radius: 0.625rem` (10px). Scale: sm 5px, md 7.5px (tab trigger), lg 10px (controls, menu items), xl 15px (menus, popovers, dialogs), 2xl 20px (cards, bubbles).",
     "",
     "## Surfaces",
     "",
-    "- `surface-primary`: vertical gradient from `--primary-highlight` (#3c86ff) to `--primary` (#056dff), inset 0 0 1px edge, 0 1px 2px shadow.",
+    "- `surface-primary`: vertical gradient from `--primary-highlight` (#4a8fff) to `--primary` (#056dff), a soft top sheen, a 1px `--primary-edge` ring, lit top and shaded bottom edges, a blue-tinted shadow.",
     "- `surface-raised`: white control with a hairline ring and 0 1px 2px shadow.",
     "- `surface-sunken`: flat slate track.",
     "- `bg-dots`: dotted canvas.",

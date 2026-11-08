@@ -14,14 +14,15 @@
  * Tokens
  * ------------------------------------------------------------------ */
 :root {
+  color-scheme: light;
   --s-font: "Inter", "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --s-font-mono: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
 
-  --s-radius-sm: 4px;
-  --s-radius-md: 6px;
-  --s-radius-lg: 8px;
-  --s-radius-xl: 12px;
-  --s-radius-2xl: 16px;
+  --s-radius-sm: 5px;
+  --s-radius-md: 8px;
+  --s-radius-lg: 10px;
+  --s-radius-xl: 15px;
+  --s-radius-2xl: 20px;
 
   --s-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --s-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -32,7 +33,8 @@
   --s-card: #ffffff;
   --s-popover: #ffffff;
   --s-primary: #056dff;
-  --s-primary-highlight: #3c86ff;
+  --s-primary-highlight: #4a8fff;
+  --s-primary-edge: #0a58d6;
   --s-primary-fg: #ffffff;
   --s-secondary: #f1f5f9;
   --s-secondary-fg: #0f172b;
@@ -52,12 +54,14 @@
 
 .dark,
 [data-theme="dark"] {
+  color-scheme: dark;
   --s-bg: #0a0a0a;
   --s-fg: #fafafa;
   --s-card: #121212;
   --s-popover: #161616;
   --s-primary: #2b7bff;
   --s-primary-highlight: #5c9bff;
+  --s-primary-edge: #1d5fd9;
   --s-secondary: #1d1d1f;
   --s-secondary-fg: #fafafa;
   --s-muted: #1d1d1f;
@@ -129,11 +133,16 @@
   user-select: none;
   color: var(--s-primary-fg);
   background-color: var(--s-primary);
-  background-image: linear-gradient(180deg, var(--s-primary-highlight) 0%, var(--s-primary) 100%);
+  background-image:
+    radial-gradient(120% 70% at 50% 0%, rgb(255 255 255 / 0.22), transparent 70%),
+    linear-gradient(180deg, var(--s-primary-highlight) 0%, var(--s-primary) 100%);
   box-shadow:
-    inset 0 0 1px var(--s-surface-edge),
-    inset 0 1px 0 #ffffff1f,
-    0 1px 2px var(--s-shadow);
+    inset 0 1px 0 rgb(255 255 255 / 0.28),
+    inset 0 -1px 0 rgb(0 0 0 / 0.12),
+    0 0 0 1px var(--s-primary-edge),
+    0 1px 2px rgb(5 50 140 / 0.2),
+    0 4px 12px -4px color-mix(in oklab, var(--s-primary) 45%, transparent);
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.12);
   transition:
     transform 150ms var(--s-ease-out),
     filter 150ms ease,
@@ -161,10 +170,19 @@
 
 .s-btn--outline {
   color: var(--s-fg);
-  background: var(--s-raised);
+  background: var(--s-raised)
+    linear-gradient(180deg, transparent, color-mix(in oklab, var(--s-fg) 2.5%, transparent));
   box-shadow:
     0 0 0 1px var(--s-border),
+    inset 0 -1px 0 color-mix(in oklab, var(--s-fg) 5%, transparent),
     0 1px 2px var(--s-shadow);
+  text-shadow: none;
+}
+.s-btn--secondary,
+.s-btn--ghost,
+.s-btn--destructive,
+.s-btn--link {
+  text-shadow: none;
 }
 .s-btn--secondary {
   color: var(--s-secondary-fg);

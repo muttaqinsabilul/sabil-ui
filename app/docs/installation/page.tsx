@@ -50,11 +50,11 @@ export default function InstallationPage() {
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.625rem;
   --background: #ffffff;
   --foreground: #0a0a0a;
   --primary: #056dff;
-  --primary-highlight: #3c86ff;
+  --primary-highlight: #4a8fff;
   /* ...see Theming for the full list */
 }`}
           lang="css"

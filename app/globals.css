@@ -71,10 +71,11 @@
 /*
  * Light. Pure neutrals (#0a0a0a family), slate fills for tracks,
  * one blue for primary actions. Values taken from the reference design.
- * Radius scale: md 6 · lg 8 · xl 12 · 2xl 16.
+ * Radius scale (base 10px): md 7.5 · lg 10 · xl 15 · 2xl 20.
  */
 :root {
-    --radius: 0.5rem;
+    color-scheme: light;
+    --radius: 0.625rem;
 
     --background: #ffffff;
     --foreground: #0a0a0a;
@@ -114,7 +115,8 @@
     --sidebar-ring: #056dff;
 
     /* Depth */
-    --primary-highlight: #3c86ff;
+    --primary-highlight: #4a8fff;
+    --primary-edge: #0a58d6;
     --surface-edge: #00000040;
     --overlay-border: #0a0a0a0f;
     --panel: #f9f8f6;
@@ -127,6 +129,7 @@
 }
 
 .dark {
+    color-scheme: dark;
     --background: #0a0a0a;
     --foreground: #fafafa;
     --card: #121212;
@@ -162,6 +165,7 @@
     --sidebar-ring: #3c86ff;
 
     --primary-highlight: #5c9bff;
+    --primary-edge: #1d5fd9;
     --surface-edge: #00000080;
     --overlay-border: #ffffff14;
     --panel: #1a1918;
@@ -181,17 +185,25 @@
  * bg-dots         : dotted canvas for previews.
  */
 @utility surface-primary {
-    background-image: linear-gradient(180deg, var(--primary-highlight) 0%, var(--primary) 100%);
+    /* A soft sheen on top of a vertical gradient, a darker 1px ring, a lit
+     * top edge, a shaded bottom edge and a blue-tinted drop shadow. */
+    background-image:
+        radial-gradient(120% 70% at 50% 0%, rgb(255 255 255 / 0.22), transparent 70%),
+        linear-gradient(180deg, var(--primary-highlight) 0%, var(--primary) 100%);
     box-shadow:
-        inset 0 0 1px var(--surface-edge),
-        inset 0 1px 0 0 #ffffff1f,
-        0 1px 2px 0 var(--shadow-color);
+        inset 0 1px 0 0 rgb(255 255 255 / 0.28),
+        inset 0 -1px 0 0 rgb(0 0 0 / 0.12),
+        0 0 0 1px var(--primary-edge),
+        0 1px 2px 0 rgb(5 50 140 / 0.2),
+        0 4px 12px -4px color-mix(in oklab, var(--primary) 45%, transparent);
 }
 
 @utility surface-raised {
     background-color: var(--raised);
+    background-image: linear-gradient(180deg, transparent 0%, color-mix(in oklab, var(--foreground) 2.5%, transparent) 100%);
     box-shadow:
         0 0 0 1px var(--border),
+        inset 0 -1px 0 0 color-mix(in oklab, var(--foreground) 5%, transparent),
         0 1px 2px 0 var(--shadow-color);
 }
 

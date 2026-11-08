@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary bg-clip-border text-primary-foreground surface-primary hover:brightness-[1.06]",
+          "bg-primary bg-clip-border text-primary-foreground surface-primary [text-shadow:0_1px_0_rgb(0_0_0/0.12)] hover:brightness-[1.06] active:brightness-95",
         outline:
           "bg-clip-border text-foreground surface-raised hover:[--raised:color-mix(in_oklab,var(--background),var(--foreground)_4%)] aria-expanded:[--raised:color-mix(in_oklab,var(--background),var(--foreground)_4%)] dark:hover:[--raised:color-mix(in_oklab,var(--muted),white_6%)]",
         secondary:

@@ -105,8 +105,8 @@ export default async function ThemingPage() {
       <Section>
         <H2 id="surfaces">Surfaces</H2>
         <P>
-          Depth is a token too. The primary surface is a vertical gradient from <InlineCode>#3c86ff</InlineCode> to{" "}
-          <InlineCode>#056dff</InlineCode> with a 1px inner edge. Raised controls are white with a hairline ring and a{" "}
+          Depth is a token too. The primary surface is a vertical gradient from <InlineCode>#4a8fff</InlineCode> to{" "}
+          <InlineCode>#056dff</InlineCode> with a soft top sheen and a darker 1px ring. Raised controls are white with a hairline ring and a{" "}
           <InlineCode>0 1px 2px</InlineCode> shadow. Tracks are flat slate. Panels are warm off-white.
         </P>
         <div className="grid grid-cols-2 gap-3 rounded-2xl border bg-dots p-6 sm:grid-cols-4">
@@ -126,8 +126,8 @@ export default async function ThemingPage() {
       <Section>
         <H2 id="radius">Radius</H2>
         <P>
-          One base value, <InlineCode>--radius: 0.5rem</InlineCode>. The scale is md 6px (tab trigger), lg 8px
-          (controls, menu items), xl 12px (menus, popovers) and 2xl 16px (cards, bubbles). Nested shapes use a smaller
+          One base value, <InlineCode>--radius: 0.625rem</InlineCode> (10px). The scale is md 7.5px (tab trigger), lg 10px
+          (controls, menu items), xl 15px (menus, popovers) and 2xl 20px (cards, bubbles). Nested shapes use a smaller
           step than their container.
         </P>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
@@ -154,7 +154,7 @@ export default async function ThemingPage() {
             ["text-sm", "Body text for interfaces", "14 / 400"],
             ["text-xs text-muted-foreground", "Caption and helper text", "12 / 400"],
             ["text-[11px] text-foreground/60", "Menu item description", "11 / 400 · 60%"],
-            ["font-mono text-[13px]", "const radius = '0.5rem'", "Mono 13"],
+            ["font-mono text-[13px]", "const radius = '0.625rem'", "Mono 13"],
           ].map(([cls, sample, spec]) => (
             <div key={spec} className="flex items-baseline justify-between gap-4 px-5 py-4">
               <span className={cls}>{sample}</span>

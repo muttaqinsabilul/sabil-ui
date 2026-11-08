@@ -21,7 +21,7 @@ const principles = [
   {
     icon: PaletteIcon,
     title: "Tactile surfaces",
-    text: "Primary actions use a blue gradient with a 1px inner edge. Secondary actions sit on a raised white surface.",
+    text: "Primary actions use a blue gradient with a soft sheen and a darker ring. Secondary actions sit on a raised white surface.",
   },
   {
     icon: ZapIcon,
