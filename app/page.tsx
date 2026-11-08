@@ -8,7 +8,7 @@ import { examples } from "@/components/examples"
 import { Reveal } from "@/components/reveal"
 import { TypedWord } from "@/components/typed-word"
 
-const heroWords = ["interfaces", "dashboards", "products", "AI apps", "websites"]
+const heroWords = ["dashboard", "AI app", "product", "website", "startup"]
 
 const aiPrompt = `Build [your app] with ${siteConfig.name}. Read ${siteConfig.url}/docs/ai.md first, then follow its tokens, components and motion rules for every screen.`
 
@@ -37,8 +37,12 @@ export default function HomePage() {
           <ArrowRightIcon className="size-3.5 text-muted-foreground transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
         </Link>
         {/* Text fades from full foreground to a soft gray at the bottom (both themes). */}
-        <h1 className="bg-linear-to-b from-foreground from-30% to-foreground/55 bg-clip-text pb-1 text-4xl font-semibold tracking-tight text-balance text-transparent sm:text-6xl">
-          The foundation for <TypedWord words={heroWords} /> that feel right
+        {/* Phone: three lines, the typed word alone on the last one. Tablet and up: two lines. */}
+        <h1 className="bg-linear-to-b from-foreground from-30% to-foreground/55 bg-clip-text pb-1 text-4xl font-semibold tracking-tight text-transparent sm:text-5xl md:text-6xl">
+          A calm foundation
+          <br className="sm:hidden" /> for
+          <br className="hidden sm:inline" /> your next
+          <br className="sm:hidden" /> <TypedWord words={heroWords} />
         </h1>
         <p className="max-w-xl text-base text-pretty text-muted-foreground sm:text-lg">{siteConfig.description}</p>
         <div className="flex flex-wrap items-center justify-center gap-3">
