@@ -69,7 +69,7 @@ export const aiRules: RuleSection[] = [
     id: "surfaces",
     title: "Surfaces",
     rules: [
-      "Primary actions use `<Button>` (default variant): a blue vertical gradient (#4a8fff → #056dff) with a soft top sheen, a darker 1px ring and a blue-tinted shadow. Do not restyle it with bg-blue-*.",
+      "Primary actions use `<Button>` (default variant): a subtle blue vertical gradient (#2a7dff → #056dff) with a darker 1px ring and a faint lit top edge. Do not restyle it with bg-blue-*.",
       "Secondary actions use `<Button variant=\"outline\">`: white, hairline ring, `0 1px 2px` shadow.",
       "One primary button per view or form. Everything else is outline, secondary or ghost.",
       "Segmented controls and tabs sit on a flat slate track (`bg-muted`, 2px padding); the active item is white with `shadow-xs`.",

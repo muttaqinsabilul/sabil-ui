@@ -20,6 +20,7 @@ const links = [
   { href: "/docs/components", label: "Components", match: (p: string) => p.startsWith("/docs/components") },
   { href: "/docs/theming", label: "Theming", match: (p: string) => p.startsWith("/docs/theming") },
   { href: "/motion", label: "Motion", match: (p: string) => p.startsWith("/motion") },
+  { href: "/docs/ai", label: "AI", match: (p: string) => p.startsWith("/docs/ai") || p.startsWith("/docs/mcp") },
 ]
 
 export function SiteHeader() {

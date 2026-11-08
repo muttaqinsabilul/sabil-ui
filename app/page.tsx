@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 
+import { mcpUrl } from "@/lib/mcp"
 import { components, siteConfig } from "@/lib/registry"
 import { Button } from "@/components/ui/button"
 import { Code } from "@/components/docs/code"
@@ -44,11 +45,21 @@ export default function HomePage() {
             <Link href="/docs/components">Browse {components.length} components</Link>
           </Button>
         </div>
-        <Code
-          code="npx create-next-app@latest my-app --tailwind"
-          lang="bash"
-          className="mt-2 w-fit max-w-full text-left [&_pre]:overflow-x-auto [&_pre]:[scrollbar-width:none]"
-        />
+        <div className="mt-2 flex w-full flex-col items-center gap-2.5">
+          <p className="text-xs text-muted-foreground">Give your AI editor the whole design system</p>
+          <Code
+            code={`claude mcp add --transport http sabil-ui ${mcpUrl}`}
+            lang="bash"
+            className="w-fit max-w-full text-left [&_pre]:overflow-x-auto [&_pre]:[scrollbar-width:none]"
+          />
+          <Link
+            href="/docs/mcp"
+            className="group inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors duration-150 hover:text-foreground"
+          >
+            Cursor, VS Code and Claude Desktop
+            <ArrowRightIcon className="size-3 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+          </Link>
+        </div>
       </section>
 
       <section className="mx-auto max-w-screen-xl px-4 pb-24 md:px-6">

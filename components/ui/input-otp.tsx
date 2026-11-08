@@ -5,9 +5,29 @@ import { cn } from "cn"
 import { OTPInput, OTPInputContext } from "input-otp"
 import { MinusIcon } from "lucide-react"
 
+/**
+ * The real <input> covers every slot, so a click always lands on it and the
+ * caret jumps to the end. This moves the selection to the slot under the
+ * pointer, so clicking a digit lets you retype that digit.
+ */
+function selectClickedSlot(event: React.MouseEvent<HTMLInputElement>) {
+  const input = event.currentTarget
+  const container = input.closest("[data-input-otp-container]")
+  const slots = Array.from(container?.querySelectorAll('[data-slot="input-otp-slot"]') ?? [])
+  const index = slots.findIndex((slot) => {
+    const r = slot.getBoundingClientRect()
+    return event.clientX >= r.left && event.clientX <= r.right
+  })
+  if (index < 0) return
+  const start = Math.min(index, input.value.length)
+  const end = start < input.value.length ? start + 1 : start
+  requestAnimationFrame(() => input.setSelectionRange(start, end))
+}
+
 function InputOTP({
   className,
   containerClassName,
+  onClick,
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string
@@ -15,6 +35,10 @@ function InputOTP({
   return (
     <OTPInput
       data-slot="input-otp"
+      onClick={(event: React.MouseEvent<HTMLInputElement>) => {
+        selectClickedSlot(event)
+        onClick?.(event)
+      }}
       containerClassName={cn(
         "cn-input-otp flex items-center has-disabled:opacity-50",
         containerClassName

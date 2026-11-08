@@ -54,7 +54,7 @@ export default function InstallationPage() {
   --background: #ffffff;
   --foreground: #0a0a0a;
   --primary: #056dff;
-  --primary-highlight: #4a8fff;
+  --primary-highlight: #2a7dff;
   /* ...see Theming for the full list */
 }`}
           lang="css"

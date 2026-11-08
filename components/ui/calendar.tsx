@@ -6,10 +6,12 @@ import {
   DayPicker,
   getDefaultClassNames,
   type DayButton,
+  type DropdownProps,
   type Locale,
 } from "react-day-picker"
 
 import { Button, buttonVariants } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
 
 function Calendar({
@@ -161,6 +163,7 @@ function Calendar({
             <ChevronDownIcon className={cn("size-4", className)} {...props} />
           )
         },
+        Dropdown: CalendarDropdown,
         DayButton: ({ ...props }) => (
           <CalendarDayButton locale={locale} {...props} />
         ),
@@ -216,6 +219,36 @@ function CalendarDayButton({
       )}
       {...props}
     />
+  )
+}
+
+/** Month and year pickers styled like the rest of the system, instead of a native <select>. */
+function CalendarDropdown({ options, value, onChange, disabled, "aria-label": ariaLabel }: DropdownProps) {
+  const selected = options?.find((o) => String(o.value) === String(value))
+
+  return (
+    <Select
+      value={value === undefined ? undefined : String(value)}
+      disabled={disabled}
+      onValueChange={(next) =>
+        onChange?.({ target: { value: next } } as unknown as React.ChangeEvent<HTMLSelectElement>)
+      }
+    >
+      <SelectTrigger
+        size="sm"
+        aria-label={ariaLabel}
+        className="h-7 gap-1 border-0 bg-transparent px-2 font-medium shadow-none hover:bg-accent dark:bg-transparent dark:hover:bg-accent [&_svg:not([class*='size-'])]:size-3.5"
+      >
+        <SelectValue>{selected?.label}</SelectValue>
+      </SelectTrigger>
+      <SelectContent position="popper" align="center" className="max-h-64 min-w-28">
+        {options?.map((o) => (
+          <SelectItem key={o.value} value={String(o.value)} disabled={o.disabled}>
+            {o.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 

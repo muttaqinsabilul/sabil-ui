@@ -2,15 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import {
-  ArrowRightIcon,
-  ArrowUpRightIcon,
-  ChartLineIcon,
-  LayoutGridIcon,
-  PlugIcon,
-  SparklesIcon,
-  WorkflowIcon,
-} from "lucide-react"
+import { ArrowRightIcon, ArrowUpRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import {
@@ -25,12 +17,12 @@ import {
 
 type Preview = "workspace" | "automations" | "insights" | "assistant" | "integrations"
 
-const products: { id: Preview; title: string; description: string; icon: typeof LayoutGridIcon }[] = [
-  { id: "workspace", title: "Workspace", description: "Docs, tasks and threads in one calm place.", icon: LayoutGridIcon },
-  { id: "automations", title: "Automations", description: "Turn repeated steps into flows that run themselves.", icon: WorkflowIcon },
-  { id: "insights", title: "Insights", description: "Live dashboards from the data you already have.", icon: ChartLineIcon },
-  { id: "assistant", title: "Assistant", description: "Ask about your work in plain language.", icon: SparklesIcon },
-  { id: "integrations", title: "Integrations", description: "Connect 120+ tools without writing code.", icon: PlugIcon },
+const products: { id: Preview; title: string; description: string }[] = [
+  { id: "workspace", title: "Workspace", description: "Docs, tasks and threads in one calm place." },
+  { id: "automations", title: "Automations", description: "Turn repeated steps into flows that run themselves." },
+  { id: "insights", title: "Insights", description: "Live dashboards from the data you already have." },
+  { id: "assistant", title: "Assistant", description: "Ask about your work in plain language." },
+  { id: "integrations", title: "Integrations", description: "Connect 120+ tools without writing code." },
 ]
 
 const teams = ["Design", "Engineering", "Marketing", "Operations", "Customer success", "Finance"]
@@ -134,7 +126,7 @@ export default function NavigationMenuDemo() {
             <NavigationMenuTrigger>Products</NavigationMenuTrigger>
             <NavigationMenuContent className="p-0">
               <div className="flex">
-                <div className="flex w-[250px] shrink-0 flex-col p-2">
+                <div className="flex w-[230px] shrink-0 flex-col p-2">
                   <ul className="flex flex-col gap-0.5">
                     {products.map((p) => (
                       <li key={p.id}>
@@ -144,22 +136,12 @@ export default function NavigationMenuDemo() {
                             onMouseEnter={() => setActive(p.id)}
                             onFocus={() => setActive(p.id)}
                             className={cn(
-                              "flex-row items-start gap-3 px-3 py-2.5 hover:bg-accent focus:bg-accent",
+                              "flex-col items-start gap-0.5 px-4 py-3 hover:bg-accent focus:bg-accent",
                               active === p.id && "bg-accent"
                             )}
                           >
-                            <span
-                              className={cn(
-                                "flex size-8 shrink-0 items-center justify-center rounded-lg bg-background shadow-xs ring-1 ring-foreground/8 transition-colors duration-150",
-                                active === p.id && "text-primary"
-                              )}
-                            >
-                              <p.icon className="size-4" />
-                            </span>
-                            <span className="flex min-w-0 flex-col">
-                              <span className="text-sm leading-5 font-medium">{p.title}</span>
-                              <span className="text-[11px] leading-[15px] text-foreground/60">{p.description}</span>
-                            </span>
+                            <span className="text-sm leading-5 font-medium">{p.title}</span>
+                            <span className="text-[11px] leading-[15px] text-foreground/60">{p.description}</span>
                           </Link>
                         </NavigationMenuLink>
                       </li>
@@ -168,7 +150,7 @@ export default function NavigationMenuDemo() {
                   <NavigationMenuLink asChild>
                     <Link
                       href="#"
-                      className="mt-1 h-9 justify-between px-3 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
+                      className="mt-1 h-9 justify-between px-4 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
                     >
                       See all products
                       <ArrowRightIcon className="size-3.5" />

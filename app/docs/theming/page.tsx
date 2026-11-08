@@ -105,8 +105,8 @@ export default async function ThemingPage() {
       <Section>
         <H2 id="surfaces">Surfaces</H2>
         <P>
-          Depth is a token too. The primary surface is a vertical gradient from <InlineCode>#4a8fff</InlineCode> to{" "}
-          <InlineCode>#056dff</InlineCode> with a soft top sheen and a darker 1px ring. Raised controls are white with a hairline ring and a{" "}
+          Depth is a token too. The primary surface is a vertical gradient from <InlineCode>#2a7dff</InlineCode> to{" "}
+          <InlineCode>#056dff</InlineCode> with a darker 1px ring and a faint lit top edge. Raised controls are white with a hairline ring and a{" "}
           <InlineCode>0 1px 2px</InlineCode> shadow. Tracks are flat slate. Panels are warm off-white.
         </P>
         <div className="grid grid-cols-2 gap-3 rounded-2xl border bg-dots p-6 sm:grid-cols-4">

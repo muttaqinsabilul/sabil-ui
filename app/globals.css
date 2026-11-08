@@ -115,7 +115,7 @@
     --sidebar-ring: #056dff;
 
     /* Depth */
-    --primary-highlight: #4a8fff;
+    --primary-highlight: #2a7dff;
     --primary-edge: #0a58d6;
     --surface-edge: #00000040;
     --overlay-border: #0a0a0a0f;
@@ -185,25 +185,18 @@
  * bg-dots         : dotted canvas for previews.
  */
 @utility surface-primary {
-    /* A soft sheen on top of a vertical gradient, a darker 1px ring, a lit
-     * top edge, a shaded bottom edge and a blue-tinted drop shadow. */
-    background-image:
-        radial-gradient(120% 70% at 50% 0%, rgb(255 255 255 / 0.22), transparent 70%),
-        linear-gradient(180deg, var(--primary-highlight) 0%, var(--primary) 100%);
+    /* A subtle vertical gradient, a darker 1px ring and a faint lit top edge. */
+    background-image: linear-gradient(180deg, var(--primary-highlight) 0%, var(--primary) 100%);
     box-shadow:
-        inset 0 1px 0 0 rgb(255 255 255 / 0.28),
-        inset 0 -1px 0 0 rgb(0 0 0 / 0.12),
+        inset 0 1px 0 0 rgb(255 255 255 / 0.16),
         0 0 0 1px var(--primary-edge),
-        0 1px 2px 0 rgb(5 50 140 / 0.2),
-        0 4px 12px -4px color-mix(in oklab, var(--primary) 45%, transparent);
+        0 1px 2px 0 rgb(0 0 0 / 0.1);
 }
 
 @utility surface-raised {
     background-color: var(--raised);
-    background-image: linear-gradient(180deg, transparent 0%, color-mix(in oklab, var(--foreground) 2.5%, transparent) 100%);
     box-shadow:
         0 0 0 1px var(--border),
-        inset 0 -1px 0 0 color-mix(in oklab, var(--foreground) 5%, transparent),
         0 1px 2px 0 var(--shadow-color);
 }
 

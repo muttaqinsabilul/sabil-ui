@@ -121,7 +121,7 @@ function buildTokens() {
       primary: {
         $type: "gradient",
         $value: [
-          { color: light["primary-highlight"] ?? "#4a8fff", position: 0 },
+          { color: light["primary-highlight"] ?? "#2a7dff", position: 0 },
           { color: light.primary ?? "#056dff", position: 1 },
         ],
       },
@@ -237,7 +237,7 @@ function themingBody() {
     "",
     "## Surfaces",
     "",
-    "- `surface-primary`: vertical gradient from `--primary-highlight` (#4a8fff) to `--primary` (#056dff), a soft top sheen, a 1px `--primary-edge` ring, lit top and shaded bottom edges, a blue-tinted shadow.",
+    "- `surface-primary`: subtle vertical gradient from `--primary-highlight` (#2a7dff) to `--primary` (#056dff), a 1px `--primary-edge` ring and a faint lit top edge.",
     "- `surface-raised`: white control with a hairline ring and 0 1px 2px shadow.",
     "- `surface-sunken`: flat slate track.",
     "- `bg-dots`: dotted canvas.",
