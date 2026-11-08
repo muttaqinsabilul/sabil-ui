@@ -3,6 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 
 import { allPages } from "@/lib/registry"
 import { cn } from "@/lib/utils"
+import { PageActions } from "@/components/docs/page-actions"
 import { Toc, type TocItem } from "@/components/docs/toc"
 
 /** Shared frame for every docs page: header, body, pager, table of contents. */
@@ -32,7 +33,10 @@ export function DocPage({
     <div className="flex gap-12 xl:gap-16">
       <article className="min-w-0 flex-1 pb-24">
         <header className="flex flex-col gap-3 pb-10">
-          {eyebrow && <p className="text-sm font-medium text-brand">{eyebrow}</p>}
+          <div className="flex min-h-8 items-center justify-between gap-4">
+            {eyebrow ? <p className="text-sm font-medium text-brand">{eyebrow}</p> : <span />}
+            <PageActions href={href} />
+          </div>
           <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{title}</h1>
           {description && (
             <p className="max-w-2xl text-base text-pretty text-muted-foreground sm:text-lg">{description}</p>

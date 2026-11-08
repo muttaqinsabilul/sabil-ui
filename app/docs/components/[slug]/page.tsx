@@ -37,7 +37,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/compone
   ).filter((s): s is { file: string; source: string } => !!s.source)
 
   const deps = [...new Set(sources.flatMap((s) => getDependencies(s.source)))].filter(
-    (d) => d !== "cn" && d !== "next"
+    (d) => d !== "next"
   )
   const main = sources[0]
   const exportsList = main ? getExports(main.source) : []
