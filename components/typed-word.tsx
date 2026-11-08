@@ -19,23 +19,23 @@ export function TypedWord({ words, className }: { words: string[]; className?: s
     let next: () => void
 
     if (reduce) {
-      delay = 2600
+      delay = 4000
       next = () => {
         const i = (index + 1) % words.length
         setIndex(i)
         setText(words[i])
       }
     } else if (!deleting && text === word) {
-      delay = 2200 // hold the full word
+      delay = 3500 // hold the full word
       next = () => setDeleting(true)
     } else if (deleting && text === "") {
-      delay = 250
+      delay = 500
       next = () => {
         setDeleting(false)
         setIndex((index + 1) % words.length)
       }
     } else {
-      delay = deleting ? 45 : 85
+      delay = deleting ? 70 : 120
       next = () => setText(deleting ? text.slice(0, -1) : word.slice(0, text.length + 1))
     }
 
