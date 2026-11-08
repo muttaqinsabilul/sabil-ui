@@ -13,7 +13,8 @@
     "predev": "node scripts/gen-examples.mjs",
     "prebuild": "node scripts/gen-examples.mjs",
     "deploy": "npm run build && wrangler deploy",
-    "preview": "npm run build && wrangler dev"
+    "preview": "npm run build && wrangler dev",
+    "postbuild": "node scripts/fix-export.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
