@@ -15,14 +15,12 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
-type Preview = "workspace" | "automations" | "insights" | "assistant" | "integrations"
+type Preview = "workspace" | "automations" | "insights"
 
 const products: { id: Preview; title: string; description: string }[] = [
   { id: "workspace", title: "Workspace", description: "Docs, tasks and threads in one calm place." },
   { id: "automations", title: "Automations", description: "Turn repeated steps into flows that run themselves." },
   { id: "insights", title: "Insights", description: "Live dashboards from the data you already have." },
-  { id: "assistant", title: "Assistant", description: "Ask about your work in plain language." },
-  { id: "integrations", title: "Integrations", description: "Connect 120+ tools without writing code." },
 ]
 
 const teams = ["Design", "Engineering", "Marketing", "Operations", "Customer success", "Finance"]
@@ -63,52 +61,20 @@ function PreviewArt({ id }: { id: Preview }) {
       </div>
     )
   }
-  if (id === "insights") {
-    const bars = [38, 52, 44, 68, 60, 82, 74]
-    return (
-      <div className="w-full max-w-[300px] rounded-xl bg-background p-4 shadow-xs ring-1 ring-foreground/5">
-        <p className="text-[10.5px] text-muted-foreground">Weekly active</p>
-        <p className="text-lg font-semibold tracking-tight">12,480</p>
-        <div className="mt-3 flex h-20 items-end gap-1.5">
-          {bars.map((h, i) => (
-            <span
-              key={i}
-              className={cn("flex-1 rounded-t-[4px]", i === bars.length - 2 ? "bg-primary" : "bg-primary/25")}
-              style={{ height: `${h}%` }}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  }
-  if (id === "assistant") {
-    return (
-      <div className="flex w-full max-w-[330px] flex-col gap-2.5">
-        <p className="ml-auto rounded-[16px_16px_6px_16px] bg-bubble-strong px-3.5 py-2 text-[10.5px] leading-[17px]">
-          What slipped last sprint?
-        </p>
-        <p className="mr-auto rounded-[16px_16px_16px_6px] bg-bubble px-3.5 py-2 text-[10.5px] leading-[17px]">
-          Two tasks moved: the billing page and the export fix. Both are waiting on API review.
-        </p>
-        <p className="ml-auto rounded-[16px_16px_6px_16px] bg-bubble-strong px-3.5 py-2 text-[10.5px] leading-[17px]">
-          Remind the reviewers.
-        </p>
-      </div>
-    )
-  }
+  const bars = [38, 52, 44, 68, 60, 82, 74]
   return (
-    <div className="grid w-full max-w-[260px] grid-cols-4 gap-2">
-      {["Gh", "Sl", "Fi", "No", "Li", "St", "Hu", "+"].map((a, i) => (
-        <span
-          key={a}
-          className={cn(
-            "flex aspect-square items-center justify-center rounded-xl bg-background text-[11px] font-semibold shadow-xs ring-1 ring-foreground/5",
-            i === 7 && "text-muted-foreground"
-          )}
-        >
-          {a}
-        </span>
-      ))}
+    <div className="w-full max-w-[300px] rounded-xl bg-background p-4 shadow-xs ring-1 ring-foreground/5">
+      <p className="text-[10.5px] text-muted-foreground">Weekly active</p>
+      <p className="text-lg font-semibold tracking-tight">12,480</p>
+      <div className="mt-3 flex h-20 items-end gap-1.5">
+        {bars.map((h, i) => (
+          <span
+            key={i}
+            className={cn("flex-1 rounded-t-[4px]", i === bars.length - 2 ? "bg-primary" : "bg-primary/25")}
+            style={{ height: `${h}%` }}
+          />
+        ))}
+      </div>
     </div>
   )
 }
@@ -119,7 +85,7 @@ export default function NavigationMenuDemo() {
   const current = products.find((p) => p.id === active)!
 
   return (
-    <div className="flex min-h-[460px] w-full items-start justify-start">
+    <div className="flex min-h-[360px] w-full items-start justify-start">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>

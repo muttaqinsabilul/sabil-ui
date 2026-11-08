@@ -16,9 +16,8 @@ import { Search } from "@/components/search"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const links = [
-  { href: "/docs", label: "Docs", match: (p: string) => p === "/docs" || p.startsWith("/docs/installation") },
+  { href: "/docs", label: "Docs", match: (p: string) => p.startsWith("/docs") && !/^\/docs\/(components|ai|mcp)/.test(p) },
   { href: "/docs/components", label: "Components", match: (p: string) => p.startsWith("/docs/components") },
-  { href: "/docs/theming", label: "Theming", match: (p: string) => p.startsWith("/docs/theming") },
   { href: "/motion", label: "Motion", match: (p: string) => p.startsWith("/motion") },
   { href: "/docs/ai", label: "AI", match: (p: string) => p.startsWith("/docs/ai") || p.startsWith("/docs/mcp") },
 ]
