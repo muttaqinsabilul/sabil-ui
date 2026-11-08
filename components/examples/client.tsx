@@ -28,6 +28,7 @@ const lazy: Record<string, React.ComponentType> = {
   "aspect-ratio-demo": dynamic(() => import("./aspect-ratio-demo").then((m) => pick(m as Mod))),
   "aspect-ratio-portrait": dynamic(() => import("./aspect-ratio-portrait").then((m) => pick(m as Mod))),
   "aspect-ratio-square": dynamic(() => import("./aspect-ratio-square").then((m) => pick(m as Mod))),
+  "attachment-cards": dynamic(() => import("./attachment-cards").then((m) => pick(m as Mod))),
   "attachment-demo": dynamic(() => import("./attachment-demo").then((m) => pick(m as Mod))),
   "attachment-group": dynamic(() => import("./attachment-group").then((m) => pick(m as Mod))),
   "attachment-image": dynamic(() => import("./attachment-image").then((m) => pick(m as Mod))),

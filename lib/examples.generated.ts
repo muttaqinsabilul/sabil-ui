@@ -30,6 +30,7 @@ export const examplesBySlug: Record<string, string[]> = {
   ],
   "attachment": [
     "attachment-demo",
+    "attachment-cards",
     "attachment-group",
     "attachment-image",
     "attachment-sizes",

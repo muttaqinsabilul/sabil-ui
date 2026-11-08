@@ -30,6 +30,7 @@ export const examples: Record<string, React.ComponentType> = {
   "aspect-ratio-demo": client("aspect-ratio-demo"),
   "aspect-ratio-portrait": client("aspect-ratio-portrait"),
   "aspect-ratio-square": client("aspect-ratio-square"),
+  "attachment-cards": client("attachment-cards"),
   "attachment-demo": client("attachment-demo"),
   "attachment-group": client("attachment-group"),
   "attachment-image": client("attachment-image"),
