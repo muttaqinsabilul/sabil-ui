@@ -75,13 +75,13 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-screen-2xl flex-col gap-2 px-4 py-8 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between md:px-6">
           <p>{siteConfig.name}. Built on Radix and Tailwind CSS. Open code, MIT.</p>
           <p>
-            <a href="/docs" className="underline underline-offset-4 hover:text-foreground">
+            <Link href="/docs" className="underline underline-offset-4 hover:text-foreground">
               Docs
-            </a>{" "}
+            </Link>{" "}
             ·{" "}
-            <a href="/motion" className="underline underline-offset-4 hover:text-foreground">
+            <Link href="/motion" className="underline underline-offset-4 hover:text-foreground">
               Motion
-            </a>
+            </Link>
           </p>
         </div>
       </footer>
