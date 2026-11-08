@@ -16,9 +16,10 @@ import { Search } from "@/components/search"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const links = [
-  { href: "/docs", label: "Docs", match: (p: string) => p.startsWith("/docs") && !/^\/docs\/(components|ai)/.test(p) },
+  { href: "/docs", label: "Docs", match: (p: string) => p.startsWith("/docs") && !/^\/docs\/(components|ai|html-css)/.test(p) },
   { href: "/docs/components", label: "Components", match: (p: string) => p.startsWith("/docs/components") },
   { href: "/motion", label: "Motion", match: (p: string) => p.startsWith("/motion") },
+  { href: "/docs/html-css", label: "HTML, CSS & JS", match: (p: string) => p.startsWith("/docs/html-css") },
   { href: "/docs/ai", label: "AI", match: (p: string) => p.startsWith("/docs/ai") },
 ]
 
