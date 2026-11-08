@@ -3,9 +3,11 @@ import { ArrowRightIcon } from "lucide-react"
 
 import { components, siteConfig } from "@/lib/registry"
 import { Button } from "@/components/ui/button"
-import { Code } from "@/components/docs/code"
+import { CopyButton } from "@/components/docs/copy-button"
 import { examples } from "@/components/examples"
 import { Reveal } from "@/components/reveal"
+
+const aiPrompt = `Build [your app] with ${siteConfig.name}. Read ${siteConfig.url}/docs/ai.md first, then follow its tokens, components and motion rules for every screen.`
 
 // Live components shown on the home page, in three columns.
 const showcase = [
@@ -46,11 +48,15 @@ export default function HomePage() {
         </div>
         <div className="mt-2 flex w-full flex-col items-center gap-2.5">
           <p className="text-xs text-muted-foreground">Paste this prompt into your AI editor</p>
-          <Code
-            code={`Build the UI with ${siteConfig.name}. Read ${siteConfig.url}/docs/ai.md first and follow its rules.`}
-            lang="text"
-            className="w-full max-w-2xl text-left [&_code>span]:whitespace-pre-wrap"
-          />
+          {/* One line; the text fades out before the copy button. */}
+          <div className="relative w-full max-w-2xl rounded-xl border bg-muted/40 text-left dark:bg-card">
+            <p className="overflow-hidden py-3.5 pr-14 pl-4 font-mono text-[13px] leading-6 whitespace-nowrap [mask-image:linear-gradient(to_right,black_70%,transparent_calc(100%-3rem))]">
+              Build <span className="text-primary">[your app]</span> with {siteConfig.name}. Read{" "}
+              {siteConfig.url}/docs/ai.md first, then follow its tokens, components and motion rules for every
+              screen.
+            </p>
+            <CopyButton value={aiPrompt} className="absolute top-1/2 right-1.5 -translate-y-1/2" />
+          </div>
           <Link
             href="/docs/ai"
             className="group inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors duration-150 hover:text-foreground"
