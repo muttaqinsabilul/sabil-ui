@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import dynamic from "next/dynamic"
 import {
   BarChart3,
   CalendarDays,
@@ -39,14 +39,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/ui/chart"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
@@ -130,36 +122,97 @@ type Account = {
 }
 
 const initialAccounts: Account[] = [
-  { id: "ig", platform: "Instagram", short: "IG", handle: "@sabil.studio", followers: 48210, change: 3.2, engagement: 4.8, status: "connected" },
-  { id: "x", platform: "X", short: "X", handle: "@sabilstudio", followers: 21540, change: -0.6, engagement: 1.9, status: "connected" },
-  { id: "li", platform: "LinkedIn", short: "in", handle: "Sabil Studio", followers: 12890, change: 5.4, engagement: 3.1, status: "connected" },
-  { id: "yt", platform: "YouTube", short: "YT", handle: "Sabil Studio", followers: 9320, change: 1.8, engagement: 6.2, status: "paused" },
-  { id: "tt", platform: "TikTok", short: "TT", handle: "@sabil.studio", followers: 33075, change: 8.9, engagement: 7.4, status: "error" },
+  {
+    id: "ig",
+    platform: "Instagram",
+    short: "IG",
+    handle: "@sabil.studio",
+    followers: 48210,
+    change: 3.2,
+    engagement: 4.8,
+    status: "connected",
+  },
+  {
+    id: "x",
+    platform: "X",
+    short: "X",
+    handle: "@sabilstudio",
+    followers: 21540,
+    change: -0.6,
+    engagement: 1.9,
+    status: "connected",
+  },
+  {
+    id: "li",
+    platform: "LinkedIn",
+    short: "in",
+    handle: "Sabil Studio",
+    followers: 12890,
+    change: 5.4,
+    engagement: 3.1,
+    status: "connected",
+  },
+  {
+    id: "yt",
+    platform: "YouTube",
+    short: "YT",
+    handle: "Sabil Studio",
+    followers: 9320,
+    change: 1.8,
+    engagement: 6.2,
+    status: "paused",
+  },
+  {
+    id: "tt",
+    platform: "TikTok",
+    short: "TT",
+    handle: "@sabil.studio",
+    followers: 33075,
+    change: 8.9,
+    engagement: 7.4,
+    status: "error",
+  },
 ]
 
 const scheduled = [
-  { id: 1, title: "Product launch teaser", accounts: ["IG", "TT"], when: "Today, 18:00", progress: 100 },
-  { id: 2, title: "Weekly design tips thread", accounts: ["X", "in"], when: "Tomorrow, 09:30", progress: 80 },
-  { id: 3, title: "Behind the scenes vlog", accounts: ["YT"], when: "Thu, 15:00", progress: 40 },
-  { id: 4, title: "Customer story carousel", accounts: ["IG", "in"], when: "Fri, 11:00", progress: 60 },
+  {
+    id: 1,
+    title: "Product launch teaser",
+    accounts: ["IG", "TT"],
+    when: "Today, 18:00",
+    progress: 100,
+  },
+  {
+    id: 2,
+    title: "Weekly design tips thread",
+    accounts: ["X", "in"],
+    when: "Tomorrow, 09:30",
+    progress: 80,
+  },
+  {
+    id: 3,
+    title: "Behind the scenes vlog",
+    accounts: ["YT"],
+    when: "Thu, 15:00",
+    progress: 40,
+  },
+  {
+    id: 4,
+    title: "Customer story carousel",
+    accounts: ["IG", "in"],
+    when: "Fri, 11:00",
+    progress: 60,
+  },
 ]
 
-const growth = Array.from({ length: 90 }, (_, i) => {
-  const d = new Date(2026, 7, 12 + i)
-  const wave = (n: number) => Math.round(Math.sin(i / n) * 40)
-  return {
-    date: d.toISOString().slice(0, 10),
-    instagram: 380 + i * 4 + wave(5),
-    tiktok: 260 + i * 6 + wave(4),
-    linkedin: 140 + i * 2 + wave(7),
+// recharts is the heaviest part of this page, so the chart loads after the rest.
+const GrowthChart = dynamic(
+  () => import("./growth-chart").then((m) => m.GrowthChart),
+  {
+    ssr: false,
+    loading: () => <div className="min-h-[260px] flex-1" />,
   }
-})
-
-const chartConfig = {
-  instagram: { label: "Instagram", color: "var(--chart-1)" },
-  tiktok: { label: "TikTok", color: "var(--chart-3)" },
-  linkedin: { label: "LinkedIn", color: "var(--chart-4)" },
-} satisfies ChartConfig
+)
 
 const nav = [
   { label: "Overview", icon: LayoutDashboard, active: true },
@@ -168,7 +221,10 @@ const nav = [
   { label: "Analytics", icon: BarChart3 },
 ]
 
-const statusBadge: Record<Status, { label: string; variant: "secondary" | "outline" | "destructive" }> = {
+const statusBadge: Record<
+  Status,
+  { label: string; variant: "secondary" | "outline" | "destructive" }
+> = {
   connected: { label: "Connected", variant: "secondary" },
   paused: { label: "Paused", variant: "outline" },
   error: { label: "Needs reconnect", variant: "destructive" },
@@ -177,7 +233,13 @@ const statusBadge: Record<Status, { label: string; variant: "secondary" | "outli
 const number = new Intl.NumberFormat("en-US")
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-function PlatformAvatar({ short, size }: { short: string; size?: "sm" | "default" }) {
+function PlatformAvatar({
+  short,
+  size,
+}: {
+  short: string
+  size?: "sm" | "default"
+}) {
   return (
     <Avatar size={size}>
       <AvatarFallback className="text-xs font-semibold">{short}</AvatarFallback>
@@ -191,20 +253,28 @@ export function SocialDashboard() {
   const [filter, setFilter] = React.useState("all")
   const [removing, setRemoving] = React.useState<Account | null>(null)
 
-  const visible = filter === "all" ? accounts : accounts.filter((a) => a.id === filter)
+  const visible =
+    filter === "all" ? accounts : accounts.filter((a) => a.id === filter)
   const totalFollowers = visible.reduce((sum, a) => sum + a.followers, 0)
   const avgEngagement = visible.length
     ? visible.reduce((sum, a) => sum + a.engagement, 0) / visible.length
     : 0
-  const chartData = growth.slice(-Number(range))
 
   function updateStatus(id: string, status: Status) {
     setAccounts((list) => list.map((a) => (a.id === id ? { ...a, status } : a)))
   }
 
   const stats = [
-    { label: "Total followers", value: compact.format(totalFollowers), change: 4.1 },
-    { label: "Avg. engagement", value: `${avgEngagement.toFixed(1)}%`, change: 0.8 },
+    {
+      label: "Total followers",
+      value: compact.format(totalFollowers),
+      change: 4.1,
+    },
+    {
+      label: "Avg. engagement",
+      value: `${avgEngagement.toFixed(1)}%`,
+      change: 0.8,
+    },
     { label: "Impressions (30d)", value: "1.2M", change: 12.5 },
     { label: "Scheduled posts", value: String(scheduled.length), change: -2.0 },
   ]
@@ -219,7 +289,9 @@ export function SocialDashboard() {
             </div>
             <div className="grid text-sm leading-tight">
               <span className="font-semibold tracking-tight">Sabil Studio</span>
-              <span className="text-xs text-muted-foreground">{accounts.length} accounts</span>
+              <span className="text-xs text-muted-foreground">
+                {accounts.length} accounts
+              </span>
             </div>
           </div>
         </SidebarHeader>
@@ -233,7 +305,9 @@ export function SocialDashboard() {
                     <item.icon />
                     <span>{item.label}</span>
                   </SidebarMenuButton>
-                  {item.badge ? <SidebarMenuBadge>{item.badge}</SidebarMenuBadge> : null}
+                  {item.badge ? (
+                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                  ) : null}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -243,12 +317,19 @@ export function SocialDashboard() {
             <SidebarMenu>
               {accounts.map((a) => (
                 <SidebarMenuItem key={a.id}>
-                  <SidebarMenuButton isActive={filter === a.id} onClick={() => setFilter(filter === a.id ? "all" : a.id)}>
-                    <span className="flex size-4 items-center justify-center text-[10px] font-semibold">{a.short}</span>
+                  <SidebarMenuButton
+                    isActive={filter === a.id}
+                    onClick={() => setFilter(filter === a.id ? "all" : a.id)}
+                  >
+                    <span className="flex size-4 items-center justify-center text-[10px] font-semibold">
+                      {a.short}
+                    </span>
                     <span>{a.platform}</span>
                   </SidebarMenuButton>
                   {a.status === "error" ? (
-                    <SidebarMenuBadge className="text-destructive">!</SidebarMenuBadge>
+                    <SidebarMenuBadge className="text-destructive">
+                      !
+                    </SidebarMenuBadge>
                   ) : null}
                 </SidebarMenuItem>
               ))}
@@ -261,10 +342,16 @@ export function SocialDashboard() {
         <header className="flex h-14 items-center gap-2 border-b px-4">
           <SidebarTrigger />
           <Separator orientation="vertical" className="mr-1 h-4!" />
-          <h1 className="truncate text-sm font-semibold tracking-tight">Overview</h1>
+          <h1 className="truncate text-sm font-semibold tracking-tight">
+            Overview
+          </h1>
           <div className="ml-auto flex items-center gap-2">
             <Select value={filter} onValueChange={setFilter}>
-              <SelectTrigger size="sm" aria-label="Filter accounts" className="w-32 sm:w-36">
+              <SelectTrigger
+                size="sm"
+                aria-label="Filter accounts"
+                className="w-32 sm:w-36"
+              >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -290,7 +377,9 @@ export function SocialDashboard() {
                     {s.value}
                   </CardTitle>
                   <CardAction>
-                    <Badge variant={s.change >= 0 ? "secondary" : "destructive"}>
+                    <Badge
+                      variant={s.change >= 0 ? "secondary" : "destructive"}
+                    >
                       {s.change >= 0 ? <TrendingUp /> : <TrendingDown />}
                       {s.change >= 0 ? "+" : ""}
                       {s.change}%
@@ -322,34 +411,7 @@ export function SocialDashboard() {
                 </CardAction>
               </CardHeader>
               <CardContent className="flex flex-1 flex-col">
-                <ChartContainer config={chartConfig} className="aspect-auto min-h-[260px] w-full flex-1">
-                  <AreaChart data={chartData} margin={{ left: 4, right: 4 }}>
-                    <CartesianGrid vertical={false} />
-                    <XAxis
-                      dataKey="date"
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={8}
-                      minTickGap={32}
-                      tickFormatter={(v) =>
-                        new Date(v).toLocaleDateString("en-US", { month: "short", day: "numeric" })
-                      }
-                    />
-                    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-                    {(["linkedin", "instagram", "tiktok"] as const).map((key) => (
-                      <Area
-                        key={key}
-                        dataKey={key}
-                        type="natural"
-                        fill={`var(--color-${key})`}
-                        fillOpacity={0.15}
-                        stroke={`var(--color-${key})`}
-                        strokeWidth={2}
-                      />
-                    ))}
-                    <ChartLegend content={<ChartLegendContent />} />
-                  </AreaChart>
-                </ChartContainer>
+                <GrowthChart range={range} />
               </CardContent>
             </Card>
 
@@ -365,7 +427,11 @@ export function SocialDashboard() {
                       <ItemContent>
                         <ItemTitle>{p.title}</ItemTitle>
                         <ItemDescription>{p.when}</ItemDescription>
-                        <Progress value={p.progress} className="mt-1.5" aria-label="Draft progress" />
+                        <Progress
+                          value={p.progress}
+                          className="mt-1.5"
+                          aria-label="Draft progress"
+                        />
                       </ItemContent>
                       <ItemActions>
                         <div className="flex -space-x-1.5">
@@ -384,7 +450,9 @@ export function SocialDashboard() {
           <Card>
             <CardHeader>
               <CardTitle>Accounts</CardTitle>
-              <CardDescription>Performance and connection status</CardDescription>
+              <CardDescription>
+                Performance and connection status
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
@@ -412,25 +480,35 @@ export function SocialDashboard() {
                           </ItemContent>
                         </Item>
                       </TableCell>
-                      <TableCell className="text-right tabular-nums">{number.format(a.followers)}</TableCell>
+                      <TableCell className="text-right tabular-nums">
+                        {number.format(a.followers)}
+                      </TableCell>
                       <TableCell
                         className={
                           a.change >= 0
                             ? "text-right tabular-nums"
-                            : "text-right tabular-nums text-destructive"
+                            : "text-right text-destructive tabular-nums"
                         }
                       >
                         {a.change >= 0 ? "+" : ""}
                         {a.change}%
                       </TableCell>
-                      <TableCell className="text-right tabular-nums">{a.engagement}%</TableCell>
+                      <TableCell className="text-right tabular-nums">
+                        {a.engagement}%
+                      </TableCell>
                       <TableCell>
-                        <Badge variant={statusBadge[a.status].variant}>{statusBadge[a.status].label}</Badge>
+                        <Badge variant={statusBadge[a.status].variant}>
+                          {statusBadge[a.status].label}
+                        </Badge>
                       </TableCell>
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon-sm" aria-label={`Actions for ${a.platform}`}>
+                            <Button
+                              variant="ghost"
+                              size="icon-sm"
+                              aria-label={`Actions for ${a.platform}`}
+                            >
                               <MoreHorizontal />
                             </Button>
                           </DropdownMenuTrigger>
@@ -455,7 +533,10 @@ export function SocialDashboard() {
                               Pause posting
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem variant="destructive" onSelect={() => setRemoving(a)}>
+                            <DropdownMenuItem
+                              variant="destructive"
+                              onSelect={() => setRemoving(a)}
+                            >
                               <Trash2 />
                               Remove account
                             </DropdownMenuItem>
@@ -471,12 +552,16 @@ export function SocialDashboard() {
         </div>
       </SidebarInset>
 
-      <AlertDialog open={removing !== null} onOpenChange={(open) => !open && setRemoving(null)}>
+      <AlertDialog
+        open={removing !== null}
+        onOpenChange={(open) => !open && setRemoving(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Remove {removing?.platform}?</AlertDialogTitle>
             <AlertDialogDescription>
-              Scheduled posts for {removing?.handle} will stop. You can connect the account again later.
+              Scheduled posts for {removing?.handle} will stop. You can connect
+              the account again later.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -504,7 +589,9 @@ function NewPostDialog({ accounts }: { accounts: Account[] }) {
   const [selected, setSelected] = React.useState<string[]>([])
 
   function toggle(id: string, checked: boolean) {
-    setSelected((list) => (checked ? [...list, id] : list.filter((x) => x !== id)))
+    setSelected((list) =>
+      checked ? [...list, id] : list.filter((x) => x !== id)
+    )
   }
 
   return (
@@ -527,7 +614,9 @@ function NewPostDialog({ accounts }: { accounts: Account[] }) {
             e.preventDefault()
             setOpen(false)
             setSelected([])
-            toast.success(`Post scheduled to ${selected.length} account${selected.length === 1 ? "" : "s"}`)
+            toast.success(
+              `Post scheduled to ${selected.length} account${selected.length === 1 ? "" : "s"}`
+            )
           }}
           className="grid gap-5"
         >
@@ -536,7 +625,9 @@ function NewPostDialog({ accounts }: { accounts: Account[] }) {
               <PenSquare className="size-4" />
               New post
             </DialogTitle>
-            <DialogDescription>Write once, publish to every selected account.</DialogDescription>
+            <DialogDescription>
+              Write once, publish to every selected account.
+            </DialogDescription>
           </DialogHeader>
           <FieldGroup>
             <FieldSet>
@@ -550,7 +641,10 @@ function NewPostDialog({ accounts }: { accounts: Account[] }) {
                       disabled={a.status === "error"}
                       onCheckedChange={(c) => toggle(a.id, c === true)}
                     />
-                    <FieldLabel htmlFor={`post-${a.id}`} className="font-normal">
+                    <FieldLabel
+                      htmlFor={`post-${a.id}`}
+                      className="font-normal"
+                    >
                       {a.platform}
                     </FieldLabel>
                   </Field>
@@ -559,7 +653,12 @@ function NewPostDialog({ accounts }: { accounts: Account[] }) {
             </FieldSet>
             <Field>
               <FieldLabel htmlFor="post-body">Caption</FieldLabel>
-              <Textarea id="post-body" placeholder="What do you want to share?" required className="min-h-28" />
+              <Textarea
+                id="post-body"
+                placeholder="What do you want to share?"
+                required
+                className="min-h-28"
+              />
             </Field>
             <Field>
               <FieldLabel htmlFor="post-time">Schedule</FieldLabel>
