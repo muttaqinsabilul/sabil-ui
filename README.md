@@ -9,7 +9,10 @@ Built on Radix UI and Tailwind CSS v4. Open code: copy it, own it, ship it.
 [Motion](https://ui.muttaqinsabilul.my.id/motion) ·
 [Example dashboard](https://ui.muttaqinsabilul.my.id/dashboard)
 
-![Sabil UI](public/og.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/home-dark.png">
+  <img alt="Sabil UI home page with live components" src=".github/assets/home-light.png">
+</picture>
 
 ## Features
 
@@ -20,6 +23,19 @@ Built on Radix UI and Tailwind CSS v4. Open code: copy it, own it, ship it.
 - **Motion guidelines.** Principles, easing and duration tokens, and 16 ready patterns such as press, hover, drawer and toast stack.
 - **Ready for AI editors.** [`/docs/ai.md`](https://ui.muttaqinsabilul.my.id/docs/ai.md) gives an assistant the rules for building with Sabil UI. [`llms.txt`](https://ui.muttaqinsabilul.my.id/llms.txt) and a Markdown copy of every docs page are also available.
 - **No React needed.** A plain [HTML, CSS and JS version](https://ui.muttaqinsabilul.my.id/docs/html-css) works on any page.
+
+## Example: social media dashboard
+
+A full page built only with Sabil UI components and tokens: sidebar, stat cards, chart, scheduled queue,
+table, dialogs and toasts. [Open the live example](https://ui.muttaqinsabilul.my.id/dashboard) or read the
+source in [`app/dashboard/`](app/dashboard).
+
+<a href="https://ui.muttaqinsabilul.my.id/dashboard">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/dashboard-dark.png">
+    <img alt="Social media dashboard built with Sabil UI" src=".github/assets/dashboard-light.png">
+  </picture>
+</a>
 
 ## Quick start
 
