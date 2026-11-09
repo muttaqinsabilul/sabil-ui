@@ -94,6 +94,51 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-screen-xl px-4 pb-24 md:px-6">
+        <Reveal>
+          <Link
+            href="/dashboard"
+            className="group grid items-center gap-6 overflow-hidden rounded-2xl border bg-card p-6 transition-colors duration-150 hover:bg-muted/40 sm:p-8 md:grid-cols-[1fr_1.4fr]"
+          >
+            <div className="flex flex-col items-start gap-3">
+              <span className="text-xs font-medium text-muted-foreground">Example</span>
+              <h2 className="text-2xl font-semibold tracking-tight">Social media dashboard</h2>
+              <p className="text-sm text-pretty text-muted-foreground">
+                A full page built only with {siteConfig.name} components and tokens: sidebar, stats, chart, table,
+                dialogs and toasts.
+              </p>
+              <span className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                View dashboard example
+                <ArrowRightIcon className="size-3.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+              </span>
+            </div>
+            {/* Schematic preview of the dashboard layout. */}
+            <div aria-hidden className="flex h-44 gap-2 rounded-xl border bg-background p-2 sm:h-52">
+              <div className="flex w-1/5 flex-col gap-1.5 rounded-lg bg-muted p-2">
+                {Array.from({ length: 6 }, (_, i) => (
+                  <div key={i} className="h-2 rounded-full bg-foreground/10" />
+                ))}
+              </div>
+              <div className="flex flex-1 flex-col gap-2">
+                <div className="grid grid-cols-4 gap-2">
+                  {Array.from({ length: 4 }, (_, i) => (
+                    <div key={i} className="h-8 rounded-lg bg-muted" />
+                  ))}
+                </div>
+                <div className="flex flex-1 gap-2">
+                  <div className="flex flex-[2] items-end gap-1 rounded-lg bg-muted p-2">
+                    {[40, 55, 45, 70, 60, 80, 75, 95].map((h, i) => (
+                      <div key={i} className="flex-1 rounded-sm bg-primary/60" style={{ height: `${h}%` }} />
+                    ))}
+                  </div>
+                  <div className="flex-1 rounded-lg bg-muted" />
+                </div>
+              </div>
+            </div>
+          </Link>
+        </Reveal>
+      </section>
+
       <footer className="border-t">
         <div className="mx-auto flex max-w-screen-2xl flex-col gap-2 px-4 py-8 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between md:px-6">
           <p>{siteConfig.name}. Built on Radix and Tailwind CSS. Open code, MIT.</p>
