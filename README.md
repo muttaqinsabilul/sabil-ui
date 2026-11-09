@@ -10,8 +10,8 @@ Built on Radix UI and Tailwind CSS v4. Open code: copy it, own it, ship it.
 [Example dashboard](https://ui.muttaqinsabilul.my.id/dashboard)
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/home-dark.png">
-  <img alt="Sabil UI home page with live components" src=".github/assets/home-light.png">
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/hero-dark.png">
+  <img alt="Sabil UI home page with live components" src=".github/assets/hero-light.png">
 </picture>
 
 ## Features
