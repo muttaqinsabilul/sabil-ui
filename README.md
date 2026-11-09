@@ -32,5 +32,5 @@ Open http://localhost:3000. The docs live at `/docs`.
 
 ## Licenses
 
-MIT. Some parts are adapted from other open-source projects; see
+MIT, see `LICENSE`. Some parts are adapted from other open-source projects; see
 `THIRD-PARTY-LICENSES.md`.
