@@ -1,26 +1,22 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
-import { FileTextIcon, SearchIcon, SparklesIcon } from "lucide-react"
+import dynamic from "next/dynamic"
+import { SearchIcon } from "lucide-react"
 
-import { motionPages } from "@/lib/motion"
-import { allPages } from "@/lib/registry"
 import { cn } from "@/lib/utils"
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
+
+const SearchDialog = dynamic(
+  () => import("./search-dialog").then((m) => m.SearchDialog),
+  { ssr: false }
+)
 
 export function Search({ className }: { className?: string }) {
   const [open, setOpen] = React.useState(false)
-  const router = useRouter()
+  // Becomes true on first open and stays true, so the dialog code loads once.
+  const [loaded, setLoaded] = React.useState(false)
+  if (open && !loaded) setLoaded(true)
 
   React.useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -35,14 +31,6 @@ export function Search({ className }: { className?: string }) {
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
-
-  const docs = allPages.filter((p) => !p.href.startsWith("/docs/components/"))
-  const comps = allPages.filter((p) => p.href.startsWith("/docs/components/"))
-
-  function go(href: string) {
-    setOpen(false)
-    router.push(href)
-  }
 
   return (
     <>
@@ -64,52 +52,8 @@ export function Search({ className }: { className?: string }) {
           <Kbd>K</Kbd>
         </KbdGroup>
       </button>
-      {/* Opened from the keyboard many times a day: no enter/exit animation. */}
-      <CommandDialog
-        open={open}
-        onOpenChange={setOpen}
-        title="Search documentation"
-        className="sm:max-w-lg data-open:animate-none data-closed:animate-none"
-      >
-        <Command>
-          <CommandInput placeholder="Search components and pages..." />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup heading="Getting Started">
-              {docs.map((p) => (
-                <CommandItem
-                  key={p.href}
-                  value={p.title}
-                  onSelect={() => go(p.href)}
-                >
-                  <FileTextIcon />
-                  {p.title}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-            <CommandGroup heading="Motion">
-            {motionPages.map((p) => (
-              <CommandItem key={p.href} value={`Motion ${p.title}`} onSelect={() => go(p.href)}>
-                <SparklesIcon />
-                {p.title}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-          <CommandGroup heading="Components">
-              {comps.map((p) => (
-                <CommandItem
-                  key={p.href}
-                  value={p.title}
-                  onSelect={() => go(p.href)}
-                >
-                  <span className="size-4 rounded-[5px] border border-current opacity-40" />
-                  {p.title}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </CommandDialog>
+      {/* The dialog code loads on first open, not with every page. */}
+      {loaded && <SearchDialog open={open} onOpenChange={setOpen} />}
     </>
   )
 }

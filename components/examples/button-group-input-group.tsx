@@ -23,7 +23,7 @@ export default function ButtonGroupInputGroup() {
   return (
     <ButtonGroup className="[--radius:9999rem]">
       <ButtonGroup>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" aria-label="Add">
           <PlusIcon />
         </Button>
       </ButtonGroup>

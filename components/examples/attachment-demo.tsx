@@ -82,7 +82,7 @@ export default function AttachmentDemo() {
             Search
           </Button>
           <Select defaultValue="fast">
-            <SelectTrigger size="sm" className="border-none bg-transparent shadow-none hover:bg-accent dark:bg-transparent">
+            <SelectTrigger size="sm" aria-label="Model" className="border-none bg-transparent shadow-none hover:bg-accent dark:bg-transparent">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

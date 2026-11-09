@@ -113,7 +113,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Textarea } from "@/components/ui/textarea"
 
 type Status = "connected" | "paused" | "error"
@@ -264,7 +264,7 @@ export function SocialDashboard() {
           <h1 className="truncate text-sm font-semibold tracking-tight">Overview</h1>
           <div className="ml-auto flex items-center gap-2">
             <Select value={filter} onValueChange={setFilter}>
-              <SelectTrigger size="sm" className="w-32 sm:w-36">
+              <SelectTrigger size="sm" aria-label="Filter accounts" className="w-32 sm:w-36">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -307,13 +307,18 @@ export function SocialDashboard() {
                 <CardTitle>Follower growth</CardTitle>
                 <CardDescription>New followers per day</CardDescription>
                 <CardAction>
-                  <Tabs value={range} onValueChange={setRange}>
-                    <TabsList>
-                      <TabsTrigger value="7">7d</TabsTrigger>
-                      <TabsTrigger value="30">30d</TabsTrigger>
-                      <TabsTrigger value="90">90d</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
+                  <ToggleGroup
+                    type="single"
+                    variant="outline"
+                    size="sm"
+                    value={range}
+                    onValueChange={(v) => v && setRange(v)}
+                    aria-label="Date range"
+                  >
+                    <ToggleGroupItem value="7">7d</ToggleGroupItem>
+                    <ToggleGroupItem value="30">30d</ToggleGroupItem>
+                    <ToggleGroupItem value="90">90d</ToggleGroupItem>
+                  </ToggleGroup>
                 </CardAction>
               </CardHeader>
               <CardContent className="flex flex-1 flex-col">
@@ -356,7 +361,7 @@ export function SocialDashboard() {
               <CardContent>
                 <ItemGroup className="gap-1">
                   {scheduled.map((p) => (
-                    <Item key={p.id} size="sm" className="px-0">
+                    <Item key={p.id} role="listitem" size="sm" className="px-0">
                       <ItemContent>
                         <ItemTitle>{p.title}</ItemTitle>
                         <ItemDescription>{p.when}</ItemDescription>

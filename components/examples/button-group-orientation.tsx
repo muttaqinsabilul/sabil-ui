@@ -10,10 +10,10 @@ export default function ButtonGroupOrientation() {
       aria-label="Media controls"
       className="h-fit"
     >
-      <Button variant="outline" size="icon">
+      <Button variant="outline" size="icon" aria-label="Add">
         <PlusIcon />
       </Button>
-      <Button variant="outline" size="icon">
+      <Button variant="outline" size="icon" aria-label="Remove">
         <MinusIcon />
       </Button>
     </ButtonGroup>

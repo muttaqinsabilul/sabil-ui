@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 
@@ -12,6 +13,29 @@ const heroWords = ["dashboard", "AI app", "product", "website", "startup"]
 
 const aiPrompt = `Build [your app] with ${siteConfig.name}. Read ${siteConfig.url}/docs/ai.md first, then follow its tokens, components and motion rules for every screen.`
 
+export const metadata: Metadata = {
+  title: { absolute: `${siteConfig.name}: React components and design system` },
+  alternates: { canonical: "/" },
+}
+
+// Structured data so search engines know the site name and what it is.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "WebSite", name: siteConfig.name, alternateName: "SabilUI", url: siteConfig.url },
+    {
+      "@type": "SoftwareSourceCode",
+      name: siteConfig.name,
+      description: siteConfig.description,
+      url: siteConfig.url,
+      codeRepository: "https://github.com/muttaqinsabilul/sabil-ui",
+      programmingLanguage: ["TypeScript", "React"],
+      license: "https://opensource.org/licenses/MIT",
+      author: { "@type": "Person", name: "Sabilul Muttaqin" },
+    },
+  ],
+}
+
 // Live components shown on the home page, in three columns.
 const showcase = [
   ["card-demo", "field-demo"],
@@ -24,6 +48,7 @@ export default function HomePage() {
 
   return (
     <div className="relative">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Soft dotted backdrop that fades out under the hero. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-dots [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
 
@@ -32,7 +57,7 @@ export default function HomePage() {
           href="/docs/components"
           className="group inline-flex items-center gap-2 rounded-full border bg-background/80 py-1 pr-3 pl-1 text-sm backdrop-blur transition-colors duration-150 hover:bg-muted"
         >
-          <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-medium text-brand-foreground">New</span>
+          <span className="rounded-full bg-foreground px-2 py-0.5 text-xs font-medium text-background">New</span>
           {newCount} components for chat and agents
           <ArrowRightIcon className="size-3.5 text-muted-foreground transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
         </Link>
